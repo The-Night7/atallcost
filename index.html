@@ -19,7 +19,7 @@
             --text: rgba(255,255,255,0.92);
             --muted: rgba(255,255,255,0.66);
 
-            --accent: #36D6FF;      /* cyan clean */
+            --accent: #36D6FF;              /* cyan clean */
             --accentSoft: rgba(54,214,255,.14);
 
             --max: 1120px;
@@ -69,8 +69,9 @@
         }
         .topbarInner{
             display:flex; align-items:center; justify-content:space-between; gap:12px;
-            padding: 14px 0;
+            padding: 12px 0;
         }
+
         .brand{
             display:flex; align-items:center; gap:10px;
             font-weight:700;
@@ -80,12 +81,17 @@
             color: rgba(255,255,255,.78);
             white-space:nowrap;
         }
-        .mark{
-            width: 11px; height: 11px; border-radius: 999px;
-            background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,0) 55%),
-            linear-gradient(135deg, var(--accent), rgba(255,255,255,0));
-            box-shadow: 0 0 0 4px rgba(255,255,255,.05);
+
+        .brandLogo{
+            width: 34px; height: 34px;
+            border-radius: 10px;
+            padding: 6px;
+            border: 1px solid rgba(255,255,255,.10);
+            background: rgba(255,255,255,.03);
+            display:grid; place-items:center;
         }
+        .brandLogo img{ width:100%; height:100%; display:block; }
+
         .nav{
             display:flex; flex-wrap:wrap; justify-content:flex-end;
             gap:8px;
@@ -104,15 +110,13 @@
             background: rgba(255,255,255,.06);
             border-color: rgba(255,255,255,.14);
         }
-
-        /* Hero */
-        .hero{ padding: 34px 0 10px; }
-        .heroGrid{
-            display:grid;
-            grid-template-columns: 1.25fr .75fr;
-            gap: 16px;
-            align-items: stretch;
+        .nav a.active{
+            border-color: rgba(54,214,255,.35);
+            background: rgba(54,214,255,.08);
+            color: rgba(255,255,255,.86);
         }
+
+        /* Base components */
         .panel{
             border-radius: calc(var(--r) + 6px);
             border: 1px solid var(--line);
@@ -132,18 +136,63 @@
             pointer-events:none;
         }
         .panelInner{ position:relative; padding: 26px; }
+
+        .card{
+            border-radius: var(--r);
+            border: 1px solid rgba(255,255,255,.10);
+            background: rgba(255,255,255,.03);
+            padding: 16px;
+        }
+        .muted{ color: var(--muted); }
+
+        .btn{
+            display:inline-flex; align-items:center; justify-content:center;
+            gap:10px;
+            padding: 11px 13px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,.12);
+            background: rgba(255,255,255,.04);
+            color: rgba(255,255,255,.88);
+            font-size: 14px;
+            transition: transform .12s ease, background .12s ease, border-color .12s ease;
+            user-select:none;
+            white-space:nowrap;
+        }
+        .btn:hover{
+            transform: translateY(-1px);
+            background: rgba(255,255,255,.06);
+            border-color: rgba(255,255,255,.18);
+        }
+        .btnPrimary{
+            border-color: rgba(54,214,255,.38);
+            background: linear-gradient(90deg, rgba(54,214,255,.18), rgba(255,255,255,.02));
+        }
+        .btnPrimary:hover{
+            border-color: rgba(54,214,255,.62);
+            background: linear-gradient(90deg, rgba(54,214,255,.22), rgba(255,255,255,.03));
+        }
+
+        .pill{
+            border:1px solid rgba(255,255,255,.10);
+            background: rgba(255,255,255,.03);
+            border-radius: 999px;
+            padding: 7px 10px;
+        }
+
+        /* HERO */
+        .hero{ padding: 34px 0 10px; }
+        .heroGrid{
+            display:grid;
+            grid-template-columns: 1.25fr .75fr;
+            gap: 16px;
+            align-items: stretch;
+        }
         .kicker{
             display:inline-flex; gap:10px; flex-wrap:wrap;
             font-size: 12px;
             letter-spacing: .14em;
             text-transform: uppercase;
             color: rgba(255,255,255,.66);
-        }
-        .pill{
-            border:1px solid rgba(255,255,255,.10);
-            background: rgba(255,255,255,.03);
-            border-radius: 999px;
-            padding: 7px 10px;
         }
         h1{
             margin: 14px 0 10px;
@@ -162,67 +211,21 @@
             display:flex; gap:10px; flex-wrap:wrap;
             margin-top: 16px;
         }
-        .btn{
-            display:inline-flex; align-items:center; justify-content:center;
-            gap:10px;
-            padding: 11px 13px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,.12);
-            background: rgba(255,255,255,.04);
-            color: rgba(255,255,255,.88);
-            font-size: 14px;
-            transition: transform .12s ease, background .12s ease, border-color .12s ease;
-            user-select:none;
-        }
-        .btn:hover{
-            transform: translateY(-1px);
-            background: rgba(255,255,255,.06);
-            border-color: rgba(255,255,255,.18);
-        }
-        .btnPrimary{
-            border-color: rgba(54,214,255,.38);
-            background: linear-gradient(90deg, rgba(54,214,255,.18), rgba(255,255,255,.02));
-        }
-        .btnPrimary:hover{
-            border-color: rgba(54,214,255,.62);
-            background: linear-gradient(90deg, rgba(54,214,255,.22), rgba(255,255,255,.03));
-        }
 
-        .side{
-            display:grid; gap: 12px;
-        }
-        .card{
-            border-radius: var(--r);
-            border: 1px solid rgba(255,255,255,.10);
-            background: rgba(255,255,255,.03);
-            padding: 16px;
-        }
-        .card h3{
+        .side{ display:grid; gap: 12px; }
+        .side .card h3{
             margin:0 0 6px;
             font-size: 14px;
             letter-spacing: .01em;
         }
-        .card p{
+        .side .card p{
             margin:0;
             color: var(--muted);
             font-size: 14px;
             line-height: 1.65;
         }
-        .miniLinkRow{
-            display:flex; gap:10px; flex-wrap:wrap;
-            margin-top: 12px;
-        }
-        .miniLink{
-            font-size: 13px;
-            padding: 8px 10px;
-            border-radius: 999px;
-            border: 1px solid rgba(255,255,255,.10);
-            background: rgba(255,255,255,.03);
-            color: rgba(255,255,255,.74);
-        }
-        .miniLink:hover{ border-color: rgba(54,214,255,.35); }
 
-        /* Sections */
+        /* Sections (un style unique pour toutes) */
         section{ margin-top: 18px; scroll-margin-top: 88px; }
         .section{
             border-radius: var(--r);
@@ -235,12 +238,12 @@
             border-bottom: 1px solid rgba(255,255,255,.08);
             display:flex; justify-content:space-between; gap:14px; align-items:flex-end;
         }
-        .sectionHead h2{
+        .sectionTitle{
             margin:0;
             font-size: 18px;
             letter-spacing: -0.01em;
         }
-        .sectionHead p{
+        .sectionDesc{
             margin: 6px 0 0;
             color: var(--muted);
             line-height: 1.6;
@@ -249,6 +252,12 @@
         }
         .sectionBody{ padding: 16px 18px 18px; }
 
+        .grid2{
+            display:grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            align-items: stretch;
+        }
         .grid3{
             display:grid;
             grid-template-columns: repeat(3, 1fr);
@@ -263,6 +272,33 @@
         .mini h3{ margin:0 0 8px; font-size: 14px; }
         .mini p{ margin:0; color: var(--muted); font-size: 14px; line-height: 1.65; }
 
+        .tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top: 10px; }
+        .tag{
+            font-size: 12px;
+            color: rgba(255,255,255,.72);
+            border: 1px solid rgba(255,255,255,.10);
+            background: rgba(255,255,255,.03);
+            padding: 6px 10px;
+            border-radius: 999px;
+        }
+
+        /* Media container */
+        .media{
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,.10);
+            background: rgba(255,255,255,.02);
+            padding: 16px;
+            display:grid;
+            place-items:center;
+            min-height: 210px;
+        }
+        .media img{
+            max-width: 100%;
+            height: auto;
+            display:block;
+            opacity: .92;
+        }
+
         /* Events timeline */
         .timeline{ display:grid; gap: 10px; }
         .event{
@@ -271,7 +307,7 @@
             background: rgba(255,255,255,.03);
             padding: 14px;
             display:grid;
-            grid-template-columns: 140px 1fr;
+            grid-template-columns: 160px 1fr;
             gap: 12px;
             align-items:start;
         }
@@ -346,6 +382,21 @@
             line-height: 1.7;
             font-size: 14px;
         }
+        .kbd{
+            font-size:12px;
+            padding: 6px 10px;
+            border-radius:999px;
+            border:1px solid rgba(255,255,255,.10);
+            background: rgba(255,255,255,.03);
+            color: rgba(255,255,255,.72);
+            white-space:nowrap;
+        }
+        .mono{
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 13px;
+            color: rgba(255,255,255,.78);
+            word-break: break-word;
+        }
 
         /* Footer */
         footer{
@@ -363,6 +414,7 @@
         @media (max-width: 980px){
             .heroGrid{ grid-template-columns: 1fr; }
             .event{ grid-template-columns: 1fr; }
+            .grid2{ grid-template-columns: 1fr; }
         }
         @media (max-width: 860px){
             .grid3{ grid-template-columns: 1fr; }
@@ -374,8 +426,14 @@
 <body>
 <div class="topbar">
     <div class="container topbarInner">
-        <div class="brand"><span class="mark"></span> AT ALL COST • CY TECH AI LAB</div>
-        <nav class="nav">
+        <div class="brand">
+        <span class="brandLogo">
+          <!-- Mets ton nouveau logo ici : img/AAC-logo-1.svg -->
+          <img src="img/AAC-logo-1.svg" alt="Logo At All Cost">
+        </span>
+            AT ALL COST • CY TECH AI LAB
+        </div>
+        <nav class="nav" aria-label="Navigation">
             <a href="#mission">Mission</a>
             <a href="#activites">Activités</a>
             <a href="#evenements">Événements</a>
@@ -407,223 +465,259 @@
                     </p>
 
                     <div class="ctaRow">
-                        <a class="btn primary" href="#about" data-scroll>⬇️ Découvrez-nous</a>
-                        <a class="btn" href="https://www.instagram.com/atallcost.ai/" target="_blank" rel="noreferrer">📷 Instagram</a>
-                        <a class="btn" href="https://discord.com/invite/eu2X2DqUyR" target="_blank" rel="noreferrer">💬 Discord</a>
-                        <a class="btn" href="https://t.me/atallcost20252026" target="_blank" rel="noreferrer">📣 Telegram</a>
-                    </div>
-
-                    <div class="arrowRow">
-                        <a class="scroll" href="#about" data-scroll aria-label="Faire défiler">⌄</a>
+                        <a class="btn btnPrimary" href="#mission" data-scroll>Découvrir l’asso</a>
+                        <a class="btn" href="https://www.instagram.com/atallcost.ai/" target="_blank" rel="noreferrer">Instagram</a>
+                        <a class="btn" href="https://discord.com/invite/eu2X2DqUyR" target="_blank" rel="noreferrer">Discord</a>
+                        <a class="btn" href="https://t.me/atallcost20252026" target="_blank" rel="noreferrer">Telegram</a>
                     </div>
                 </div>
             </div>
+
+            <aside class="side">
+                <div class="card">
+                    <h3>Ce qu’on fait</h3>
+                    <p>Ateliers, mini-formations, veille, et projets IA concrets (du débutant au confirmé).</p>
+                </div>
+                <div class="card">
+                    <h3>Pourquoi nous rejoindre ?</h3>
+                    <p>Une communauté qui apprend vite, partage ses ressources, et construit des prototypes.</p>
+                </div>
+                <div class="card">
+                    <h3>Où nous trouver</h3>
+                    <p>CY Tech — Avenue du Parc, 95000 Cergy.</p>
+                </div>
+            </aside>
         </div>
     </header>
 
     <!-- ABOUT -->
     <section id="about">
-        <div class="head">
-            <div>
-                <p class="eyebrow">Qui sommes-nous ?</p>
-                <h2 class="title">Une joyeuse bande de passionné·e·s d’IA</h2>
-            </div>
-            <a class="next" href="#objectifs" data-scroll aria-label="Section suivante">⌄</a>
-        </div>
-
-        <div class="body">
-            <div class="grid">
-                <div class="card">
-                    <p class="muted">
-                        Fondée en <strong>2023</strong>, notre association est basée à <strong>CY Tech</strong>, Avenue du Parc, 95000 Cergy.
-                        Notre mission est simple, mais ambitieuse : rendre l’IA accessible à tous — et surtout utile au quotidien.
-                    </p>
-                    <div class="tags">
-                        <span class="tag">Accessibilité</span>
-                        <span class="tag">Pédagogie</span>
-                        <span class="tag">Communauté</span>
-                        <span class="tag">Éthique</span>
-                    </div>
-                </div>
-
-                <div class="media">
-                    <div>
-                        <img src="img/AAC%20logo%201.png" alt="Logo 1 de AAC">
-                    </div>
+        <div class="section">
+            <div class="sectionHead">
+                <div>
+                    <h2 class="sectionTitle">Qui sommes-nous ?</h2>
+                    <p class="sectionDesc">Une joyeuse bande de passionné·e·s d’IA, basée à CY Tech.</p>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- OBJECTIFS -->
-    <section id="objectifs">
-        <div class="head">
-            <div>
-                <p class="eyebrow">Que faisons-nous ?</p>
-                <h2 class="title">Nos objectifs</h2>
-            </div>
-            <a class="next" href="#avenir" data-scroll aria-label="Section suivante">⌄</a>
-        </div>
-
-        <div class="body">
-            <div class="grid">
-                <div class="card">
-                    <ul>
-                        <li><strong>Partage de connaissances</strong> : veille, actus, discussions (débutant → confirmé).</li>
-                        <li><strong>Collaborations</strong> : projets avec entreprises, universités et assos.</li>
-                        <li><strong>Ateliers & conférences</strong> : démos, retours d’expérience, cas concrets.</li>
-                    </ul>
-                    <div class="tags">
-                        <span class="tag">Workshops</span>
-                        <span class="tag">Talks</span>
-                        <span class="tag">Projets</span>
-                        <span class="tag">Veille</span>
+            <div class="sectionBody">
+                <div class="grid2">
+                    <div class="card">
+                        <p class="muted" style="margin:0; line-height:1.7">
+                            Fondée en <strong>2023</strong>, notre association vise à rendre l’IA accessible à tous — et surtout utile au quotidien.
+                        </p>
+                        <div class="tags">
+                            <span class="tag">Accessibilité</span>
+                            <span class="tag">Pédagogie</span>
+                            <span class="tag">Communauté</span>
+                            <span class="tag">Éthique</span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="card">
-                    <p class="muted">
-                        Que tu viennes “juste par curiosité” ou pour construire un projet sérieux,
-                        tu trouveras une équipe, des ressources et un terrain de jeu pour apprendre vite.
-                    </p>
-                    <div class="tags">
-                        <span class="tag">On apprend ensemble</span>
-                        <span class="tag">Zéro gatekeeping</span>
+                    <div class="media">
+                        <img src="img/AAC-logo-1.svg" alt="Logo At All Cost (version SVG)">
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- AVENIR -->
-    <section id="avenir">
-        <div class="head">
-            <div>
-                <p class="eyebrow">Et pour demain…</p>
-                <h2 class="title">Le rôle de chacun</h2>
-            </div>
-            <a class="next" href="#formations" data-scroll aria-label="Section suivante">⌄</a>
-        </div>
-
-        <div class="body">
-            <div class="grid">
-                <div class="card">
-                    <ul>
-                        <li><strong>Projets innovants</strong> : une idée ? on t’aide à la concrétiser (proto, démo, produit).</li>
-                        <li><strong>Pour le bien commun</strong> : l’IA au service des étudiants et de la communauté.</li>
-                        <li><strong>Normes & éthique</strong> : bonnes pratiques, usages responsables, transparence.</li>
-                    </ul>
+    <!-- MISSION -->
+    <section id="mission">
+        <div class="section">
+            <div class="sectionHead">
+                <div>
+                    <h2 class="sectionTitle">Mission</h2>
+                    <p class="sectionDesc">Apprendre, partager et construire des usages IA responsables à CY Tech.</p>
                 </div>
+            </div>
 
-                <div class="media">
-                    <div>
-                        <strong>Bloc “Projets”</strong><br/>
-                        Ajoute ici : screenshots, affiches d’events, mini-cases projets.
+            <div class="sectionBody">
+                <div class="grid3">
+                    <div class="mini">
+                        <h3>Apprendre</h3>
+                        <p>Comprendre l’IA et les outils avec des formats courts et actionnables.</p>
+                    </div>
+                    <div class="mini">
+                        <h3>Construire</h3>
+                        <p>Passer de l’idée au prototype : projets, démos, itérations.</p>
+                    </div>
+                    <div class="mini">
+                        <h3>Partager</h3>
+                        <p>Événements, talks, collaborations — et une communauté qui s’entraide.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FORMATIONS -->
-    <section id="formations">
-        <div class="head">
-            <div>
-                <p class="eyebrow">On forme !</p>
-                <h2 class="title">Nos formations</h2>
+    <!-- ACTIVITÉS -->
+    <section id="activites">
+        <div class="section">
+            <div class="sectionHead">
+                <div>
+                    <h2 class="sectionTitle">Activités</h2>
+                    <p class="sectionDesc">Des formats simples et réguliers pour progresser sans se perdre dans la théorie.</p>
+                </div>
             </div>
-            <a class="next" href="#cotiser" data-scroll aria-label="Section suivante">⌄</a>
-        </div>
 
-        <div class="body">
-            <div class="card">
-                <p class="muted">
-                    Nous avons notamment formé des professeurs de CY Tech à l’usage de ChatGPT
-                    pour accompagner la transition pédagogique liée au virage IA.
-                </p>
-                <div class="tags">
-                    <span class="tag">Prompting</span>
-                    <span class="tag">Cas d’usage</span>
-                    <span class="tag">Pédagogie</span>
-                    <span class="tag">Ressources</span>
+            <div class="sectionBody">
+                <div class="grid3">
+                    <div class="mini">
+                        <h3>Ateliers</h3>
+                        <p>Prompting, outils IA, workflows, automatisations — avec cas pratiques.</p>
+                    </div>
+                    <div class="mini">
+                        <h3>Conférences</h3>
+                        <p>Invités, retours d’expérience, démos et discussions.</p>
+                    </div>
+                    <div class="mini">
+                        <h3>Projets encadrés</h3>
+                        <p>Petites équipes, objectifs clairs, livrables concrets.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- COTISATION -->
-    <section id="cotiser">
-        <div class="head">
-            <div>
-                <p class="eyebrow">Cotisation</p>
-                <h2 class="title">Accès comptes IA & statut cotisant</h2>
+    <!-- ÉVÉNEMENTS -->
+    <section id="evenements">
+        <div class="section">
+            <div class="sectionHead">
+                <div>
+                    <h2 class="sectionTitle">Événements</h2>
+                    <p class="sectionDesc">Prochains rendez-vous (remplace par vos dates réelles).</p>
+                </div>
             </div>
-            <a class="next" href="#contact" data-scroll aria-label="Section suivante">⌄</a>
-        </div>
 
-        <div class="body">
-            <details open>
-                <summary>
-                    Comment cotiser ? <span class="kbd">10€</span>
-                </summary>
-                <div style="height:10px"></div>
-                <p class="muted">
-                    Envoie <strong>10€</strong> pour devenir cotisant (Lydia / Paylib…) au :
-                </p>
-                <p class="mono"><strong>06 95 71 74 51</strong></p>
+            <div class="sectionBody">
+                <div class="timeline">
+                    <div class="event">
+                        <div class="date">Jan 2026</div>
+                        <div>
+                            <strong>Atelier — Découvrir l’IA (débutant)</strong>
+                            <span>Comprendre les bases + outils utiles pour les études/projets.</span>
+                            <div class="chip">📍 CY Tech • Salle à confirmer</div>
+                        </div>
+                    </div>
 
-                <p class="muted" style="margin-top:12px">Ou par virement bancaire (RIB) :</p>
-                <p class="mono"><strong>IBAN :</strong> FR7617598000010003087934397</p>
-
-                <p class="muted" style="margin-top:12px">
-                    Pour l’accès aux comptes IA payants : rejoins le Discord et renseigne ton Nom + Classe dans
-                    <span class="mono">#cotisants-ou-club</span>. Vous vérifiez, puis rôle → accès <span class="mono">#accès-ia</span>.
-                </p>
+                    <div class="event">
+                        <div class="date">Fév 2026</div>
+                        <div>
+                            <strong>Talk — IA générative : usages & limites</strong>
+                            <span>Cas concrets, bonnes pratiques, et discussion éthique.</span>
+                            <div class="chip">🎤 Invité • à confirmer</div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="ctaRow" style="margin-top:12px">
-                    <a class="btn primary" href="https://discord.com/invite/eu2X2DqUyR" target="_blank" rel="noreferrer">💬 Rejoindre Discord</a>
-                    <a class="btn" href="https://t.me/atallcost20252026" target="_blank" rel="noreferrer">📣 Rejoindre Telegram</a>
+                    <a class="btn btnPrimary" href="https://discord.com/invite/eu2X2DqUyR" target="_blank" rel="noreferrer">Voir les annonces (Discord)</a>
+                    <a class="btn" href="https://t.me/atallcost20252026" target="_blank" rel="noreferrer">Channel Telegram</a>
                 </div>
-            </details>
+            </div>
         </div>
     </section>
 
-    <!-- CONTACT -->
-    <section id="contact">
-        <div class="head">
-            <div>
-                <p class="eyebrow">Nous rejoindre</p>
-                <h2 class="title">At All Cost — liens & contact</h2>
+    <!-- PROJETS -->
+    <section id="projets">
+        <div class="section">
+            <div class="sectionHead">
+                <div>
+                    <h2 class="sectionTitle">Projets</h2>
+                    <p class="sectionDesc">Quelques exemples (remplace par vos vrais projets dès que prêts).</p>
+                </div>
             </div>
-            <a class="next" href="#top" data-scroll aria-label="Retour en haut">⌃</a>
-        </div>
 
-        <div class="body">
-            <div class="grid">
-                <div class="card">
-                    <p class="muted">
-                        Le plus simple : Instagram, Discord ou Telegram.
-                        (Si vous voulez, j’ajoute aussi un formulaire de contact sans backend via Formspree.)
-                    </p>
-
-                    <div class="ctaRow" style="margin-top:12px">
-                        <a class="btn primary" href="https://www.instagram.com/atallcost.ai/" target="_blank" rel="noreferrer">📷 Instagram</a>
-                        <a class="btn" href="https://discord.com/invite/eu2X2DqUyR" target="_blank" rel="noreferrer">💬 Discord</a>
-                        <a class="btn" href="https://t.me/atallcost20252026" target="_blank" rel="noreferrer">📣 Telegram</a>
-                        <a class="btn" href="https://twitter.com/atallcost_ai" target="_blank" rel="noreferrer">𝕏 X (Twitter)</a>
-                        <a class="btn" href="https://atallcostai.carrd.co/" target="_blank" rel="noreferrer">🌐 Carrd</a>
+            <div class="sectionBody">
+                <div class="projList">
+                    <div class="proj">
+                        <div>
+                            <strong>Assistant IA pour étudiants</strong>
+                            <span>Un bot Discord/Telegram pour ressources, FAQ, et orientation.</span>
+                        </div>
+                        <div class="badge">prototype</div>
+                    </div>
+                    <div class="proj">
+                        <div>
+                            <strong>Veille IA hebdo</strong>
+                            <span>Un résumé clair des actus + outils utiles.</span>
+                        </div>
+                        <div class="badge">communauté</div>
+                    </div>
+                    <div class="proj">
+                        <div>
+                            <strong>Ateliers “IA pour les cours”</strong>
+                            <span>Méthodes, erreurs à éviter, exercices guidés.</span>
+                        </div>
+                        <div class="badge">workshop</div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
 
-                <div class="card">
-                    <p class="muted" style="margin-bottom:10px">
-                        <strong>Adresse</strong><br/>
-                        CY Tech — Avenue du Parc, 95000 Cergy
-                    </p>
-                    <p class="muted" style="margin:0">
-                        <strong>Tip design :</strong> un QR code Discord + une mini photo “team” ici = rendu très pro.
+    <!-- REJOINDRE -->
+    <section id="rejoindre">
+        <div class="section">
+            <div class="sectionHead">
+                <div>
+                    <h2 class="sectionTitle">Rejoindre</h2>
+                    <p class="sectionDesc">Le plus simple : Discord. Ensuite tu as accès aux events, ressources et projets.</p>
+                </div>
+            </div>
+
+            <div class="sectionBody">
+                <div class="ctaRow">
+                    <a class="btn btnPrimary" href="https://discord.com/invite/eu2X2DqUyR" target="_blank" rel="noreferrer">Rejoindre Discord</a>
+                    <a class="btn" href="https://www.instagram.com/atallcost.ai/" target="_blank" rel="noreferrer">Instagram</a>
+                    <a class="btn" href="https://t.me/atallcost20252026" target="_blank" rel="noreferrer">Telegram</a>
+                    <a class="btn" href="https://twitter.com/atallcost_ai" target="_blank" rel="noreferrer">X</a>
+                </div>
+
+                <!-- ⚠️ Suggestion : éviter IBAN/téléphone en public -->
+                <div class="card" style="margin-top:12px">
+                    <h3 style="margin:0 0 6px;font-size:14px">Cotisation</h3>
+                    <p style="margin:0;color:var(--muted);line-height:1.65;font-size:14px">
+                        Conseil : évite de mettre IBAN/téléphone sur un site public. Mets plutôt un lien “Cotiser” (HelloAsso/Lydia)
+                        et garde les détails dans Discord.
                     </p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+        <div class="section">
+            <div class="sectionHead">
+                <div>
+                    <h2 class="sectionTitle">FAQ</h2>
+                    <p class="sectionDesc">Deux trois réponses rapides (à compléter avec vos infos réelles).</p>
+                </div>
+            </div>
+
+            <div class="sectionBody">
+                <details open>
+                    <summary>Faut-il être bon en informatique ? <span class="kbd">Non</span></summary>
+                    <div class="answer">
+                        Non. On a des formats débutants et des projets plus techniques. Tu peux venir juste pour apprendre.
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Comment proposer un projet ? <span class="kbd">Discord</span></summary>
+                    <div class="answer">
+                        Poste une idée sur Discord : on t’aide à cadrer, trouver une équipe, et avancer vers un prototype.
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Où suivre les événements ? <span class="kbd">Telegram</span></summary>
+                    <div class="answer">
+                        Les annonces passent sur Discord et Telegram, et on relaye sur Instagram.
+                    </div>
+                </details>
             </div>
         </div>
     </section>
@@ -631,7 +725,7 @@
     <footer>
         <span>© <span id="year"></span> At All Cost — CY Tech AI Lab</span>
         <span style="display:flex; gap:10px; align-items:center;">
-        <span style="opacity:.75;">Carrd-like • clean</span>
+        <span style="opacity:.75;">Clean • AI Lab</span>
         <span class="pill">Made at Cergy</span>
       </span>
     </footer>
@@ -652,9 +746,11 @@
     });
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // active nav (desktop)
-    const links = Array.from(document.querySelectorAll(".nav a.chip"));
-    const sections = links.map(a => document.querySelector(a.getAttribute("href"))).filter(Boolean);
+    // active nav (desktop) - FIXED
+    const navLinks = Array.from(document.querySelectorAll(".nav a"));
+    const secList = navLinks
+        .map(a => document.querySelector(a.getAttribute("href")))
+        .filter(Boolean);
 
     const io = new IntersectionObserver((entries)=>{
         const visible = entries
@@ -662,13 +758,13 @@
             .sort((a,b)=>b.intersectionRatio - a.intersectionRatio)[0];
         if(!visible) return;
 
-        links.forEach(a=>a.classList.remove("active"));
+        navLinks.forEach(a=>a.classList.remove("active"));
         const id = "#"+visible.target.id;
-        const match = links.find(a=>a.getAttribute("href")===id);
+        const match = navLinks.find(a=>a.getAttribute("href")===id);
         if(match) match.classList.add("active");
-    }, { rootMargin: "-40% 0px -55% 0px", threshold: [0.05,0.15,0.25] });
+    }, { rootMargin: "-35% 0px -55% 0px", threshold: [0.05,0.15,0.25] });
 
-    sections.forEach(s=>io.observe(s));
+    secList.forEach(s=>io.observe(s));
 </script>
 </body>
 </html>
