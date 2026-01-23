@@ -12,6 +12,9 @@
     <!-- FontAwesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- SDK EmailJS (Nécessaire pour l'envoi d'emails) -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
     <style>
         /* --- RESET & VARIABLES --- */
         :root {
@@ -639,17 +642,17 @@
                 <form id="inscriptionForm" onsubmit="handleFormSubmit(event)">
                     <div class="form-group">
                         <label for="nom">Nom Complet</label>
-                        <input type="text" id="nom" class="form-control" required placeholder="John Doe">
+                        <input type="text" id="nom" name="from_name" class="form-control" required placeholder="John Doe">
                     </div>
                     
                     <div class="form-group">
                         <label for="email">Email Étudiant</label>
-                        <input type="email" id="email" class="form-control" required placeholder="john.doe@ecole.fr">
+                        <input type="email" id="email" name="from_email" class="form-control" required placeholder="john.doe@ecole.fr">
                     </div>
                     
                     <div class="form-group">
                         <label for="role">Pôle d'intérêt</label>
-                        <select id="role" class="form-control">
+                        <select id="role" name="interest" class="form-control">
                             <option value="tech">Pôle Technique / IA</option>
                             <option value="com">Communication & Design</option>
                             <option value="event">Événementiel</option>
@@ -659,7 +662,7 @@
 
                     <div class="form-group">
                         <label for="motivation">Pourquoi nous rejoindre ?</label>
-                        <textarea id="motivation" class="form-control" rows="4" placeholder="Vos motivations, compétences..."></textarea>
+                        <textarea id="motivation" name="message" class="form-control" rows="4" placeholder="Vos motivations, compétences..."></textarea>
                     </div>
 
                     <button type="submit" class="btn-primary" style="width: 100%; cursor: pointer;">ENVOYER LA CANDIDATURE</button>
@@ -683,6 +686,19 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
+        // --- CONFIGURATION EMAILJS ---
+        // Remplace les valeurs ci-dessous par les tiennes depuis ton compte EmailJS
+        const EMAILJS_PUBLIC_KEY = "VOTRE_PUBLIC_KEY"; // ex: "user_xxxxxxxxxx"
+        const EMAILJS_SERVICE_ID = "VOTRE_SERVICE_ID"; // ex: "service_gmail"
+        const EMAILJS_TEMPLATE_ID = "VOTRE_TEMPLATE_ID"; // ex: "template_contact"
+
+        // Initialisation d'EmailJS si la clé est présente
+        (function() {
+            if (EMAILJS_PUBLIC_KEY !== "VOTRE_PUBLIC_KEY") {
+                emailjs.init(EMAILJS_PUBLIC_KEY);
+            }
+        })();
+
         // Fonction pour afficher une section spécifique
         function showSection(sectionId) {
             // 1. Cacher toutes les sections
@@ -707,7 +723,6 @@
             links.forEach(link => link.classList.remove('active'));
             
             // Trouver le lien qui correspond à la section et l'activer
-            // (Logique simple basée sur l'onclick)
             links.forEach(link => {
                 if(link.getAttribute('onclick').includes(sectionId)) {
                     link.classList.add('active');
@@ -728,28 +743,74 @@
             navLinks.classList.toggle('active');
         }
 
-        // Simulation d'envoi de formulaire
+        // --- GESTION DU FORMULAIRE ---
         function handleFormSubmit(e) {
             e.preventDefault();
             const btn = e.target.querySelector('button');
             const originalText = btn.innerText;
-            
+            const form = e.target;
+
+            // Récupération des données
+            const nom = document.getElementById('nom').value;
+            const email = document.getElementById('email').value;
+            const role = document.getElementById('role').value;
+            const motivation = document.getElementById('motivation').value;
+
             btn.innerText = "ENVOI EN COURS...";
             btn.style.opacity = "0.7";
-            
-            setTimeout(() => {
-                btn.innerText = "CANDIDATURE ENVOYÉE !";
-                btn.style.backgroundColor = "#4CAF50"; // Vert
-                btn.style.borderColor = "#4CAF50";
-                e.target.reset();
+            btn.disabled = true;
+
+            // Vérification si EmailJS est configuré
+            if (EMAILJS_PUBLIC_KEY === "VOTRE_PUBLIC_KEY") {
+                // --- MODE SECOURS (Si pas de configuration) ---
+                console.log("EmailJS non configuré. Utilisation du fallback mailto.");
                 
                 setTimeout(() => {
-                    btn.innerText = originalText;
-                    btn.style.backgroundColor = ""; // Reset
-                    btn.style.borderColor = "";
-                    btn.style.opacity = "1";
-                }, 3000);
-            }, 1500);
+                    const subject = `Candidature At All Cost - ${nom}`;
+                    const body = `Nom: ${nom}%0D%0AEmail: ${email}%0D%0APôle souhaité: ${role}%0D%0AMotivation:%0D%0A${motivation}`;
+                    
+                    // Ouvre le client mail par défaut
+                    window.location.href = `mailto:contact@atallcost.fr?subject=${subject}&body=${body}`;
+                    
+                    // Reset UI
+                    btn.innerText = "OUVERTURE DE VOTRE BOITE MAIL...";
+                    setTimeout(() => {
+                        btn.innerText = originalText;
+                        btn.style.opacity = "1";
+                        btn.disabled = false;
+                        form.reset();
+                    }, 2000);
+                }, 1000);
+
+            } else {
+                // --- MODE RÉEL (Via EmailJS) ---
+                emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
+                    .then(function() {
+                        btn.innerText = "CANDIDATURE ENVOYÉE !";
+                        btn.style.backgroundColor = "#4CAF50"; // Vert
+                        btn.style.borderColor = "#4CAF50";
+                        form.reset();
+                        
+                        setTimeout(() => {
+                            btn.innerText = originalText;
+                            btn.style.backgroundColor = "";
+                            btn.style.borderColor = "";
+                            btn.style.opacity = "1";
+                            btn.disabled = false;
+                        }, 3000);
+                    }, function(error) {
+                        console.error('Échec de l\'envoi...', error);
+                        btn.innerText = "ERREUR - RÉESSAYER";
+                        btn.style.backgroundColor = "#ff4444";
+                        
+                        setTimeout(() => {
+                            btn.innerText = originalText;
+                            btn.style.backgroundColor = "";
+                            btn.style.opacity = "1";
+                            btn.disabled = false;
+                        }, 3000);
+                    });
+            }
         }
 
         // Initialisation au chargement
