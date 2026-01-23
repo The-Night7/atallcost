@@ -688,13 +688,13 @@
     <script>
         // --- CONFIGURATION EMAILJS ---
         // Remplace les valeurs ci-dessous par les tiennes depuis ton compte EmailJS
-        const EMAILJS_PUBLIC_KEY = "VOTRE_PUBLIC_KEY"; // ex: "user_xxxxxxxxxx"
-        const EMAILJS_SERVICE_ID = "VOTRE_SERVICE_ID"; // ex: "service_gmail"
-        const EMAILJS_TEMPLATE_ID = "VOTRE_TEMPLATE_ID"; // ex: "template_contact"
+        const EMAILJS_PUBLIC_KEY = "RSnQP5_BBUJX2wfBM"; // ex: "user_xxxxxxxxxx"
+        const EMAILJS_SERVICE_ID = "service_liem09u"; // ex: "service_gmail"
+        const EMAILJS_TEMPLATE_ID = "template_n05x1y8"; // ex: "template_contact"
 
         // Initialisation d'EmailJS si la clé est présente
         (function() {
-            if (EMAILJS_PUBLIC_KEY !== "VOTRE_PUBLIC_KEY") {
+            if (EMAILJS_PUBLIC_KEY !== "RSnQP5_BBUJX2wfBM") {
                 emailjs.init(EMAILJS_PUBLIC_KEY);
             }
         })();
@@ -761,7 +761,7 @@
             btn.disabled = true;
 
             // Vérification si EmailJS est configuré
-            if (EMAILJS_PUBLIC_KEY === "VOTRE_PUBLIC_KEY") {
+            if (EMAILJS_PUBLIC_KEY === "RSnQP5_BBUJX2wfBM") {
                 // --- MODE SECOURS (Si pas de configuration) ---
                 console.log("EmailJS non configuré. Utilisation du fallback mailto.");
                 
