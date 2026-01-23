@@ -6,7 +6,7 @@
     <meta name="description" content="At All Cost - L'AI Lab de CY Tech. Rejoignez l'association dédiée à l'intelligence artificielle et l'innovation technologique.">
     <meta name="keywords" content="association, IA, intelligence artificielle, CY Tech, innovation">
     <title>At All Cost - AI Lab de CY Tech</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles_pages.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -14,7 +14,7 @@
     <header class="navbar">
         <nav class="navbar-container">
             <div class="navbar-brand">
-                <a href="#" class="logo">At All Cost</a>
+                <a href="#accueil" class="logo">At All Cost</a>
             </div>
             <button class="hamburger" id="hamburger">
                 <span></span>
@@ -24,14 +24,15 @@
             <ul class="nav-menu" id="navMenu">
                 <li><a href="#accueil" class="nav-link">Accueil</a></li>
                 <li><a href="#apropos" class="nav-link">À Propos</a></li>
-                <li><a href="#equipe" class="nav-link">Structure</a></li>
+                <li><a href="#organigramme" class="nav-link">Organigramme</a></li>
+                <li><a href="#chiffres" class="nav-link">Chiffres Clés</a></li>
                 <li><a href="#reseaux" class="nav-link">Nos Réseaux</a></li>
                 <li><a href="#inscription" class="nav-link cta-btn">Rejoindre</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Hero Section -->
+    <!-- PAGE 1: ACCUEIL -->
     <section id="accueil" class="hero">
         <div class="hero-content">
             <h1 class="hero-title">At All Cost</h1>
@@ -45,8 +46,8 @@
         </div>
     </section>
 
-    <!-- À Propos Section -->
-    <section id="apropos" class="about">
+    <!-- PAGE 2: À PROPOS -->
+    <section id="apropos" class="about" style="display: none;">
         <div class="container">
             <h2>À Propos</h2>
             <p class="about-intro">At All Cost est l'association AI Lab de CY Tech, dédiée à la promotion de l'intelligence artificielle, l'innovation technologique et la collaboration entre étudiants, enseignants et professionnels.</p>
@@ -76,59 +77,350 @@
         </div>
     </section>
 
-    <!-- Équipe/Structure Section -->
-    <section id="equipe" class="team">
+    <!-- PAGE 3: ORGANIGRAMME -->
+    <section id="organigramme" class="organigramme" style="display: none;">
         <div class="container">
-            <h2>Notre Structure</h2>
-            <p class="team-intro">At All Cost fonctionne selon une structure organisée avec un bureau et plusieurs domaines spécialisés.</p>
+            <h2>Organigramme</h2>
+            <p class="organigramme-intro">Structure organisationnelle de l'association At All Cost pour l'année 2024-2025.</p>
             
-            <div class="team-grid">
-                <div class="team-card">
-                    <i class="fas fa-crown"></i>
-                    <h3>Président(e)</h3>
-                    <p>Leadership et vision stratégique</p>
+            <div class="organigramme-visual">
+                <div class="org-level">
+                    <div class="org-card org-president">
+                        <i class="fas fa-crown"></i>
+                        <h3>Président(e)</h3>
+                        <p>Leadership & Vision</p>
+                    </div>
                 </div>
-                <div class="team-card">
-                    <i class="fas fa-file-alt"></i>
-                    <h3>Secrétaire</h3>
-                    <p>Organisation administrative</p>
+                
+                <div class="org-connector"></div>
+                
+                <div class="org-level bureau">
+                    <div class="org-card org-bureau">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>Secrétaire</h3>
+                        <p>Admin</p>
+                    </div>
+                    <div class="org-card org-bureau">
+                        <i class="fas fa-money-bill"></i>
+                        <h3>Trésorier(e)</h3>
+                        <p>Finances</p>
+                    </div>
+                    <div class="org-card org-bureau">
+                        <i class="fas fa-megaphone"></i>
+                        <h3>Communication</h3>
+                        <p>Média</p>
+                    </div>
+                    <div class="org-card org-bureau">
+                        <i class="fas fa-handshake"></i>
+                        <h3>Rel. Entreprises</h3>
+                        <p>Partenaires</p>
+                    </div>
                 </div>
-                <div class="team-card">
-                    <i class="fas fa-money-bill"></i>
-                    <h3>Trésorier(e)</h3>
-                    <p>Gestion des finances</p>
+                
+                <div class="org-connector"></div>
+                
+                <div class="org-level fonctions">
+                    <div class="org-card org-fonction">
+                        <i class="fas fa-palette"></i>
+                        <h3>Design</h3>
+                        <p>Visuels</p>
+                    </div>
+                    <div class="org-card org-fonction">
+                        <i class="fas fa-calendar"></i>
+                        <h3>Événementiel</h3>
+                        <p>Activités</p>
+                    </div>
+                    <div class="org-card org-fonction">
+                        <i class="fas fa-people-group"></i>
+                        <h3>Ressources Humaines</h3>
+                        <p>Bien-être</p>
+                    </div>
                 </div>
-                <div class="team-card">
-                    <i class="fas fa-megaphone"></i>
-                    <h3>Communication</h3>
-                    <p>Visibilité publique</p>
+                
+                <div class="org-connector"></div>
+                
+                <div class="org-level bulles">
+                    <div class="org-card org-bulle">
+                        <i class="fas fa-brain"></i>
+                        <h3>Chercheur(euse) IA</h3>
+                        <p>Veille Tech</p>
+                    </div>
+                    <div class="org-card org-bulle">
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>Club IA</h3>
+                        <p>Activités</p>
+                    </div>
+                    <div class="org-card org-bulle">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>Formation IA</h3>
+                        <p>Pédagogie</p>
+                    </div>
                 </div>
-                <div class="team-card">
-                    <i class="fas fa-palette"></i>
-                    <h3>Design</h3>
-                    <p>Créations visuelles</p>
+            </div>
+            
+            <div class="organigramme-legend">
+                <div class="legend-item">
+                    <div class="legend-color president"></div>
+                    <span>Présidence</span>
                 </div>
-                <div class="team-card">
-                    <i class="fas fa-handshake"></i>
-                    <h3>Relations Entreprises</h3>
-                    <p>Partenariats stratégiques</p>
+                <div class="legend-item">
+                    <div class="legend-color bureau"></div>
+                    <span>Bureau Principal</span>
                 </div>
-                <div class="team-card">
-                    <i class="fas fa-calendar"></i>
-                    <h3>Événementiel</h3>
-                    <p>Organisation d'activités</p>
+                <div class="legend-item">
+                    <div class="legend-color fonction"></div>
+                    <span>Fonctions</span>
                 </div>
-                <div class="team-card">
-                    <i class="fas fa-people-group"></i>
-                    <h3>Relations Humaines</h3>
-                    <p>Bien-être des membres</p>
+                <div class="legend-item">
+                    <div class="legend-color bulle"></div>
+                    <span>Bulles Spécialisées</span>
+                </div>
+            </div>
+            
+            <div class="roles-details">
+                <h3>Rôles et Responsabilités</h3>
+                
+                <div class="role-card">
+                    <h4>🏆 Présidence</h4>
+                    <p>Supervision générale, vision stratégique, coordination des pôles, développement de l'association et représentation officielle.</p>
+                </div>
+                
+                <div class="role-card">
+                    <h4>📋 Bureau Principal</h4>
+                    <p><strong>Secrétaire</strong>: Gestion administrative et procédures. <strong>Trésorier(e)</strong>: Finances et cotisations. <strong>Communication</strong>: Réseaux et visibilité. <strong>Rel. Entreprises</strong>: Partenariats stratégiques.</p>
+                </div>
+                
+                <div class="role-card">
+                    <h4>🎯 Fonctions Opérationnelles</h4>
+                    <p><strong>Design</strong>: Créations graphiques. <strong>Événementiel</strong>: Organisation d'activités. <strong>RH</strong>: Bien-être et recrutement des membres.</p>
+                </div>
+                
+                <div class="role-card">
+                    <h4>🔬 Bulles Spécialisées</h4>
+                    <p><strong>Chercheur IA</strong>: Veille technologique. <strong>Club IA</strong>: Activités du club. <strong>Formation</strong>: Formation à l'IA.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Réseaux Sociaux Section -->
-    <section id="reseaux" class="social-section">
+    <!-- PAGE 4: CHIFFRES CLÉS -->
+    <section id="chiffres" class="chiffres" style="display: none;">
+        <div class="container">
+            <h2>Chiffres Clés</h2>
+            <p class="chiffres-intro">Découvrez les statistiques et chiffres clés de l'association At All Cost pour l'année 2024-2025.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card stat-primary">
+                    <div class="stat-number">250+</div>
+                    <div class="stat-label">Membres</div>
+                    <p>Étudiants actifs et engagés</p>
+                </div>
+                
+                <div class="stat-card stat-secondary">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Postes</div>
+                    <p>Rôles du bureau principal</p>
+                </div>
+                
+                <div class="stat-card stat-tertiary">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Événements</div>
+                    <p>Par an</p>
+                </div>
+                
+                <div class="stat-card stat-primary">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Formations</div>
+                    <p>Sessions depuis la création</p>
+                </div>
+            </div>
+            
+            <div class="categories-section">
+                <h3>Répartition des Membres</h3>
+                <div class="categories-grid">
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="category-number">85%</div>
+                        <p>Étudiants</p>
+                    </div>
+                    
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="category-number">12%</div>
+                        <p>Professionnels</p>
+                    </div>
+                    
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-chalkboard-user"></i>
+                        </div>
+                        <div class="category-number">3%</div>
+                        <p>Enseignants</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="interests-section">
+                <h3>Domaines d'Intérêt des Membres</h3>
+                <div class="interests-list">
+                    <div class="interest-item">
+                        <span class="interest-name">Machine Learning</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 92%;"></div>
+                        </div>
+                        <span class="progress-percent">92%</span>
+                    </div>
+                    
+                    <div class="interest-item">
+                        <span class="interest-name">Traitement du Langage Naturel</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 78%;"></div>
+                        </div>
+                        <span class="progress-percent">78%</span>
+                    </div>
+                    
+                    <div class="interest-item">
+                        <span class="interest-name">Vision par Ordinateur</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 65%;"></div>
+                        </div>
+                        <span class="progress-percent">65%</span>
+                    </div>
+                    
+                    <div class="interest-item">
+                        <span class="interest-name">Robotique</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 48%;"></div>
+                        </div>
+                        <span class="progress-percent">48%</span>
+                    </div>
+                    
+                    <div class="interest-item">
+                        <span class="interest-name">Éthique de l'IA</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 71%;"></div>
+                        </div>
+                        <span class="progress-percent">71%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="activities-section">
+                <h3>Activités par An</h3>
+                <div class="activities-grid">
+                    <div class="activity-card">
+                        <div class="activity-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4>Réunions</h4>
+                        <p class="activity-number">24</p>
+                        <p class="activity-desc">Réunions mensuelles du bureau</p>
+                    </div>
+                    
+                    <div class="activity-card">
+                        <div class="activity-icon">
+                            <i class="fas fa-chalkboard"></i>
+                        </div>
+                        <h4>Formations</h4>
+                        <p class="activity-number">15+</p>
+                        <p class="activity-desc">Sessions de formation membres</p>
+                    </div>
+                    
+                    <div class="activity-card">
+                        <div class="activity-icon">
+                            <i class="fas fa-microphone"></i>
+                        </div>
+                        <h4>Conférences</h4>
+                        <p class="activity-number">8</p>
+                        <p class="activity-desc">Conférences thématiques</p>
+                    </div>
+                    
+                    <div class="activity-card">
+                        <div class="activity-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h4>Partenariats</h4>
+                        <p class="activity-number">12</p>
+                        <p class="activity-desc">Collaborations externes</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="growth-section">
+                <h3>Croissance de l'Association</h3>
+                <div class="growth-chart">
+                    <div class="growth-year">
+                        <div class="year-label">2024-2025</div>
+                        <div class="year-bar">
+                            <div class="year-fill" style="width: 100%;"></div>
+                        </div>
+                        <div class="year-count">250 membres</div>
+                    </div>
+                    
+                    <div class="growth-year">
+                        <div class="year-label">2023-2024</div>
+                        <div class="year-bar">
+                            <div class="year-fill" style="width: 72%;"></div>
+                        </div>
+                        <div class="year-count">180 membres</div>
+                    </div>
+                    
+                    <div class="growth-year">
+                        <div class="year-label">2022-2023</div>
+                        <div class="year-bar">
+                            <div class="year-fill" style="width: 48%;"></div>
+                        </div>
+                        <div class="year-count">120 membres</div>
+                    </div>
+                    
+                    <div class="growth-year">
+                        <div class="year-label">2021-2022</div>
+                        <div class="year-bar">
+                            <div class="year-fill" style="width: 28%;"></div>
+                        </div>
+                        <div class="year-count">70 membres</div>
+                    </div>
+                </div>
+                <p class="growth-note">Croissance moyenne: +40% par an</p>
+            </div>
+            
+            <div class="objectives-section">
+                <h3>Objectifs 2025-2026</h3>
+                <div class="objectives-grid">
+                    <div class="objective-card">
+                        <i class="fas fa-target"></i>
+                        <h4>300 Membres</h4>
+                        <p>Atteindre 300 membres actifs</p>
+                    </div>
+                    
+                    <div class="objective-card">
+                        <i class="fas fa-rocket"></i>
+                        <h4>20 Événements</h4>
+                        <p>Augmenter les activités et visibilité</p>
+                    </div>
+                    
+                    <div class="objective-card">
+                        <i class="fas fa-globe"></i>
+                        <h4>Partenaires Internationaux</h4>
+                        <p>Développer des collaborations globales</p>
+                    </div>
+                    
+                    <div class="objective-card">
+                        <i class="fas fa-book"></i>
+                        <h4>Certification IA</h4>
+                        <p>Créer un programme de certification</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAGE 5: NOS RÉSEAUX -->
+    <section id="reseaux" class="social-section" style="display: none;">
         <div class="container">
             <h2>Nos Réseaux</h2>
             <p class="social-intro">Rejoignez notre communauté sur nos différentes plateformes de communication et restez connecté.</p>
@@ -162,14 +454,14 @@
                 <a href="https://cytech.cyu.fr/campus-cy-tech/vie-associative/lexperience-associative/aac-at-all-cost-cy-tech-ai-lab" target="_blank" rel="noopener noreferrer" class="social-card">
                     <i class="fas fa-school"></i>
                     <h3>CY Tech</h3>
-                    <p>Page officielle officielle</p>
+                    <p>Page officielle</p>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Inscription Section -->
-    <section id="inscription" class="registration">
+    <!-- PAGE 6: INSCRIPTION -->
+    <section id="inscription" class="registration" style="display: none;">
         <div class="container">
             <div class="registration-content">
                 <h2>Nous Rejoindre</h2>
@@ -283,6 +575,8 @@
         </div>
     </footer>
 
+    <!-- Scripts -->
+    <script src="router.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
