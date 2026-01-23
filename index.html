@@ -653,10 +653,10 @@
                     <div class="form-group">
                         <label for="role">Pôle d'intérêt</label>
                         <select id="role" name="interest" class="form-control">
-                            <option value="tech">Pôle Technique / IA</option>
-                            <option value="com">Communication & Design</option>
-                            <option value="event">Événementiel</option>
-                            <option value="treso">Administration</option>
+                            <option value="rh">Pôle Ressources Humaines</option>
+                            <option value="com">Pôle Communication & Design</option>
+                            <option value="event">Pôle Événementiel</option>
+                            <option value="partenariats">Pôle Relations Entreprise</option>
                         </select>
                     </div>
 
@@ -723,6 +723,7 @@
             links.forEach(link => link.classList.remove('active'));
             
             // Trouver le lien qui correspond à la section et l'activer
+            // (Logique simple basée sur l'onclick)
             links.forEach(link => {
                 if(link.getAttribute('onclick').includes(sectionId)) {
                     link.classList.add('active');
