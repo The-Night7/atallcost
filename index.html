@@ -692,11 +692,9 @@
         const EMAILJS_SERVICE_ID = "service_liem09u"; // ex: "service_gmail"
         const EMAILJS_TEMPLATE_ID = "template_n05x1y8"; // ex: "template_contact"
 
-        // Initialisation d'EmailJS si la clé est présente
+        // Initialisation d'EmailJS au chargement
         (function() {
-            if (EMAILJS_PUBLIC_KEY !== "RSnQP5_BBUJX2wfBM") {
-                emailjs.init(EMAILJS_PUBLIC_KEY);
-            }
+            emailjs.init(EMAILJS_PUBLIC_KEY);
         })();
 
         // Fonction pour afficher une section spécifique
@@ -751,7 +749,7 @@
             const originalText = btn.innerText;
             const form = e.target;
 
-            // Récupération des données
+            // Récupération des données (utile pour le fallback)
             const nom = document.getElementById('nom').value;
             const email = document.getElementById('email').value;
             const role = document.getElementById('role').value;
@@ -761,57 +759,49 @@
             btn.style.opacity = "0.7";
             btn.disabled = true;
 
-            // Vérification si EmailJS est configuré
-            if (EMAILJS_PUBLIC_KEY === "RSnQP5_BBUJX2wfBM") {
-                // --- MODE SECOURS (Si pas de configuration) ---
-                console.log("EmailJS non configuré. Utilisation du fallback mailto.");
-                
-                setTimeout(() => {
-                    const subject = `Candidature At All Cost - ${nom}`;
-                    const body = `Nom: ${nom}%0D%0AEmail: ${email}%0D%0APôle souhaité: ${role}%0D%0AMotivation:%0D%0A${motivation}`;
+            // Tentative d'envoi via EmailJS
+            emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
+                .then(function() {
+                    // SUCCÈS
+                    console.log('SUCCESS!');
+                    btn.innerText = "CANDIDATURE ENVOYÉE !";
+                    btn.style.backgroundColor = "#4CAF50"; // Vert
+                    btn.style.borderColor = "#4CAF50";
+                    form.reset();
                     
-                    // Ouvre le client mail par défaut
-                    window.location.href = `mailto:contact@atallcost.fr?subject=${subject}&body=${body}`;
-                    
-                    // Reset UI
-                    btn.innerText = "OUVERTURE DE VOTRE BOITE MAIL...";
                     setTimeout(() => {
                         btn.innerText = originalText;
+                        btn.style.backgroundColor = "";
+                        btn.style.borderColor = "";
                         btn.style.opacity = "1";
                         btn.disabled = false;
-                        form.reset();
-                    }, 2000);
-                }, 1000);
+                    }, 3000);
+                })
+                .catch(function(error) {
+                    // ÉCHEC -> BASCULE VERS LE MODE SECOURS (MAILTO)
+                    console.error('FAILED...', error);
+                    console.log("Passage au mode secours (mailto)");
+                    
+                    btn.innerText = "Redirection vers votre boîte mail...";
+                    btn.style.backgroundColor = "#E65100"; // Orange pour prévenir
 
-            } else {
-                // --- MODE RÉEL (Via EmailJS) ---
-                emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
-                    .then(function() {
-                        btn.innerText = "CANDIDATURE ENVOYÉE !";
-                        btn.style.backgroundColor = "#4CAF50"; // Vert
-                        btn.style.borderColor = "#4CAF50";
-                        form.reset();
+                    setTimeout(() => {
+                        const subject = `Candidature At All Cost - ${nom}`;
+                        const body = `Nom: ${nom}%0D%0AEmail: ${email}%0D%0APôle souhaité: ${role}%0D%0AMotivation:%0D%0A${motivation}`;
                         
-                        setTimeout(() => {
-                            btn.innerText = originalText;
-                            btn.style.backgroundColor = "";
-                            btn.style.borderColor = "";
-                            btn.style.opacity = "1";
-                            btn.disabled = false;
-                        }, 3000);
-                    }, function(error) {
-                        console.error('Échec de l\'envoi...', error);
-                        btn.innerText = "ERREUR - RÉESSAYER";
-                        btn.style.backgroundColor = "#ff4444";
+                        // Ouvre le client mail par défaut avec la bonne adresse
+                        window.location.href = `mailto:atallcostai@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
                         
+                        // Reset UI
                         setTimeout(() => {
                             btn.innerText = originalText;
                             btn.style.backgroundColor = "";
                             btn.style.opacity = "1";
                             btn.disabled = false;
-                        }, 3000);
-                    });
-            }
+                            form.reset();
+                        }, 2000);
+                    }, 1500);
+                });
         }
 
         // Initialisation au chargement
