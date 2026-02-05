@@ -11,8 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <!-- SDK EmailJS -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="img/AAC_logo.png" type="image/x-icon">
 
     <style>
         /* --- VARIABLES --- */
@@ -57,7 +55,7 @@
             top: 0;
             width: 100%;
             height: 80px;
-            background: rgba(5, 5, 5, 0.95);
+            background: rgba(5, 5, 5, 0.9);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
@@ -104,18 +102,49 @@
             background: white;
         }
 
-        /* --- HERO SECTION --- */
+        .jp-text {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--primary-yellow);
+            letter-spacing: 5px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* --- HERO SECTION AVEC VIDÉO --- */
         .hero {
+            position: relative;
             height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            background: linear-gradient(to bottom, rgba(5, 5, 5, 0.3), var(--bg-dark)), url('img_vdo/brain_neural_network2.png');
-            background-size: cover;
-            background-position: center;
+            overflow: hidden;
             padding: 0 20px;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -2;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(5, 5, 5, 0.4), var(--bg-dark));
+            z-index: -1;
         }
 
         .hero h1 {
@@ -123,6 +152,7 @@
             font-size: 5rem;
             margin-bottom: 10px;
             letter-spacing: 5px;
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
         }
 
         .hero h1 span {
@@ -139,6 +169,7 @@
             border-bottom: 1px solid rgba(255, 192, 0, 0.3);
             padding: 10px 20px;
             display: inline-block;
+            background: rgba(5, 5, 5, 0.5);
         }
 
         /* --- SECTIONS COMMUNES --- */
@@ -188,7 +219,7 @@
             margin-bottom: 20px;
         }
 
-        /* --- ORGANIGRAMME (VOTRE STYLE) --- */
+        /* --- ORGANIGRAMME --- */
         .org-chart {
             display: flex;
             flex-direction: column;
@@ -212,10 +243,6 @@
             text-align: center;
             min-width: 200px;
             transition: 0.3s;
-        }
-
-        .member-card:hover {
-            background: rgba(255, 255, 255, 0.1);
         }
 
         .role-badge {
@@ -286,29 +313,13 @@
             gap: 20px;
         }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .form-group label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            color: var(--text-gray);
-        }
-
-        input, select, textarea {
+        input, textarea {
             background: black;
             border: 1px solid #333;
             color: white;
             padding: 12px;
             border-radius: 4px;
             outline: none;
-        }
-
-        input:focus, textarea:focus {
-            border-color: var(--primary-yellow);
         }
 
         .submit-btn {
@@ -323,11 +334,6 @@
             text-transform: uppercase;
         }
 
-        .submit-btn:hover {
-            background: white;
-        }
-
-        /* --- FOOTER --- */
         footer {
             padding: 40px;
             text-align: center;
@@ -336,7 +342,6 @@
             font-size: 0.8rem;
         }
 
-        /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
             .hero h1 { font-size: 3rem; }
             .nav-links { display: none; }
@@ -349,7 +354,7 @@
     <!-- NAVIGATION -->
     <nav>
         <div class="logo">
-            <img src="img/AAC-logo-1.svg" alt="AAC Logo" onclick="window.scrollTo(0,0)">
+            <img src="logo/vrai_logo_aac.png" alt="AAC Logo" onclick="window.scrollTo(0,0)">
         </div>
         <div class="nav-links">
             <a href="#home">Accueil</a>
@@ -359,10 +364,21 @@
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
+    <!-- HERO SECTION AVEC VIDÉO BACKGROUND -->
     <section id="home" class="hero">
-        <h1>AT ALL <span>COST</span></h1>
-        <h2>Intelligence Artificielle & Innovation</h2>
+        <!-- La vidéo en background -->
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="img_vdo/brain_video.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la lecture de vidéos.
+        </video>
+        <!-- Overlay pour assombrir et dégradé -->
+        <div class="hero-overlay"></div>
+
+        <p class="jp-text">未来は明るい (L'AVENIR EST BRILLANT)</p>
+        <h1>FORGING THE <br><span class="highlight">INTELLIGENCE</span> OF TOMORROW</h1>
+        <p style="margin: 1.5rem 0; font-size: 1.1rem; color: #ccc;">
+            Bienvenue chez <strong>At All Cost</strong>. L'association étudiante dédiée à l'exploration, la compréhension et le développement de l'Intelligence Artificielle.
+        </p>
     </section>
 
     <!-- VISION SECTION -->
@@ -384,7 +400,6 @@
         <h2 class="section-title">L'<span>Organigramme</span></h2>
 
         <div class="org-chart">
-            <!-- Niveau 1 : Direction -->
             <div class="org-level">
                 <div class="member-card" style="border-color: var(--primary-yellow); transform: scale(1.1);">
                     <span class="role-badge" style="background: var(--primary-yellow); color: black;">PRÉSIDENT</span>
@@ -398,7 +413,6 @@
                 </div>
             </div>
 
-            <!-- Niveau 2 : Secrétariat -->
             <div class="org-level">
                 <div class="member-card">
                     <span class="role-badge">SECRÉTAIRE</span>
@@ -412,16 +426,13 @@
                 </div>
             </div>
 
-            <!-- Niveau 3 : Pôles Spécialisés -->
             <div class="org-level">
-                <!-- Pôle RH -->
                 <div class="member-card" style="border-left: 3px solid var(--secondary-blue);">
                     <span class="role-badge" style="background: var(--secondary-blue); color: black;">PÔLE RESSOURCES HUMAINES</span>
                     <div class="member-name">Myriam Bensaid</div>
                     <div class="member-name">Amira Habes</div>
                     <div style="font-size: 0.8rem; color: #888; margin-top: 5px;">Recrutement & Suivi</div>
                 </div>
-                <!-- Pôle COM -->
                 <div class="member-card" style="border-left: 3px solid var(--secondary-blue);">
                     <span class="role-badge" style="background: var(--secondary-blue); color: black;">PÔLE COMMUNICATION & DESIGN</span>
                     <div class="member-name">Samia Barhili</div>
@@ -431,7 +442,6 @@
                     <div class="member-name">Alaa Ouazbir</div>
                     <div style="font-size: 0.8rem; color: #888; margin-top: 5px;">Réseaux & Image</div>
                 </div>
-                <!-- Pôle EVENT -->
                 <div class="member-card" style="border-left: 3px solid var(--secondary-blue);">
                     <span class="role-badge" style="background: var(--secondary-blue); color: black;">PÔLE ÉVÉNEMENTIEL</span>
                     <div class="member-name">Yasmina Hida</div>
@@ -439,7 +449,6 @@
                     <div class="member-name">Hajar Achour</div>
                     <div style="font-size: 0.8rem; color: #888; margin-top: 5px;">Hackathons & Meetups</div>
                 </div>
-                <!-- Pôle RELATIONS -->
                 <div class="member-card" style="border-left: 3px solid var(--secondary-blue);">
                     <span class="role-badge" style="background: var(--secondary-blue); color: black;">PÔLE RELATIONS ENTREPRISE</span>
                     <div class="member-name">Tiziri Bouchichene</div>
@@ -454,7 +463,6 @@
     <section id="contact">
         <h2 class="section-title">Nous <span>Contacter</span></h2>
         <div class="contact-container">
-            <!-- INFOS -->
             <div class="contact-info">
                 <div class="info-item">
                     <i class="fas fa-envelope"></i>
@@ -465,26 +473,18 @@
                     <span>Paris - France</span>
                 </div>
                 <div class="social-links">
-                    <a href="https://www.instagram.com/atallcost.ai" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.linkedin.com/company/atallcost/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="https://discord.com/invite/eu2X2DqUyR" target="_blank" title="Discord"><i class="fab fa-discord"></i></a>
+                    <a href="https://www.instagram.com/atallcost.ai" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/company/atallcost/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://discord.com/invite/eu2X2DqUyR" target="_blank"><i class="fab fa-discord"></i></a>
                 </div>
             </div>
-            <!-- FORMULAIRE -->
             <form id="contact-form">
-                <div class="form-group">
-                    <label>Nom complet</label>
-                    <input type="text" name="user_name" required>
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <input type="text" name="user_name" placeholder="Nom complet" required>
+                    <input type="email" name="user_email" placeholder="Email" required>
+                    <textarea name="message" rows="4" placeholder="Votre motivation..." required></textarea>
+                    <button type="submit" id="submit-btn" class="submit-btn">Envoyer</button>
                 </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" name="user_email" required>
-                </div>
-                <div class="form-group">
-                    <label>Motivation</label>
-                    <textarea name="message" rows="4" required placeholder="Pourquoi nous rejoindre ?"></textarea>
-                </div>
-                <button type="submit" id="submit-btn" class="submit-btn">Envoyer</button>
             </form>
         </div>
     </section>
@@ -493,58 +493,36 @@
         <p>&copy; 2024 At All Cost AI Lab. Association Étudiante.</p>
     </footer>
 
-    <!-- LOGIQUE JAVASCRIPT -->
     <script>
-        // --- CONFIGURATION EMAILJS ---
-        // Remplace les valeurs ci-dessous par les tiennes depuis ton compte EmailJS
-        const EMAILJS_PUBLIC_KEY = "RSnQP5_BBUJX2wfBM"; // ex: "user_xxxxxxxxxx"
-        const EMAILJS_SERVICE_ID = "service_liem09u"; // ex: "service_gmail"
-        const EMAILJS_TEMPLATE_ID = "template_n05x1y8"; // ex: "template_contact"
+        const EMAILJS_PUBLIC_KEY = "RSnQP5_BBUJX2wfBM";
+        const EMAILJS_SERVICE_ID = "service_liem09u";
+        const EMAILJS_TEMPLATE_ID = "template_n05x1y8";
 
-        // Initialisation d'EmailJS au chargement
         (function() {
             emailjs.init(EMAILJS_PUBLIC_KEY);
         })();
 
-        // --- GESTION DU FORMULAIRE ---
         document.getElementById('contact-form').addEventListener('submit', function(e) {
             e.preventDefault();
             const btn = document.getElementById('submit-btn');
-            const originalText = btn.innerText;
-            btn.innerText = "ENVOI EN COURS...";
-            btn.style.opacity = "0.7";
+            btn.innerText = "Envoi...";
             btn.disabled = true;
 
-            // Envoi via EmailJS
             emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, this)
-                .then(function() {
-                    // SUCCÈS
-                    console.log('SUCCESS!');
-                    btn.innerText = "CANDIDATURE ENVOYÉE !";
-                    btn.style.backgroundColor = "#4CAF50"; // Vert
-                    btn.style.borderColor = "#4CAF50";
-                    document.getElementById('contact-form').reset();
-
+                .then(() => {
+                    btn.innerText = "Candidature Envoyée !";
+                    btn.style.background = "#4CAF50";
+                    this.reset();
                     setTimeout(() => {
-                        btn.innerText = originalText;
-                        btn.style.backgroundColor = "";
-                        btn.style.borderColor = "";
-                        btn.style.opacity = "1";
+                        btn.innerText = "Envoyer";
+                        btn.style.background = "";
                         btn.disabled = false;
-                    }, 3000);
+                    }, 4000);
                 })
-                .catch(function(error) {
-                    // ÉCHEC
-                    console.error('FAILED...', error);
-                    btn.innerText = "ERREUR D'ENVOI";
-                    btn.style.backgroundColor = "#F44336"; // Rouge
-
-                    setTimeout(() => {
-                            btn.innerText = originalText;
-                            btn.style.backgroundColor = "";
-                            btn.style.opacity = "1";
-                            btn.disabled = false;
-                    }, 3000);
+                .catch((err) => {
+                    console.error(err);
+                    btn.innerText = "Erreur d'envoi";
+                    btn.disabled = false;
                 });
         });
     </script>
