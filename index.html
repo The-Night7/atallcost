@@ -26,12 +26,12 @@
                             yellow: '#FFC000',
                             dark: '#050505',
                             gray: '#1A1A1A',
-                            card: 'rgba(255, 255, 255, 0.03)',
+                            card: 'rgba(255, 255, 255, 0.05)',
                             blue: '#00A8E8'
                         }
                     },
                     fontFamily: {
-                        aac: ['Android101', 'Orbitron', 'sans-serif'],
+                        aac: ['Android101', 'sans-serif'],
                         tech: ['Rajdhani', 'sans-serif'],
                         display: ['Orbitron', 'sans-serif'],
                     }
@@ -47,24 +47,24 @@
             font-display: swap;
         }
 
-        /* Hero Glitch Effect */
-        .glitch-text {
-            position: relative;
+        /* Style Organigramme */
+        .org-level {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
         }
 
-        /* Cartes Membres */
         .member-card {
-            background: rgba(20, 20, 20, 0.6);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 220px;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .member-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
-            border-color: rgba(255, 255, 255, 0.3);
         }
 
         .role-badge {
@@ -75,7 +75,15 @@
             border-radius: 4px;
             font-weight: bold;
             display: inline-block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
+            background: #444;
+            color: white;
+        }
+
+        .member-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 2px;
         }
 
         /* Scrollbar */
@@ -87,21 +95,19 @@
 <body class="bg-aac-dark text-white font-tech overflow-x-hidden selection:bg-aac-yellow selection:text-black">
 
     <!-- NAVIGATION -->
-    <nav class="fixed w-full z-50 bg-aac-dark/90 backdrop-blur-md border-b border-white/5">
+    <nav class="fixed w-full z-50 bg-aac-dark/95 border-b border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
-                <div class="flex-shrink-0 cursor-pointer flex items-center gap-3" onclick="window.scrollTo(0,0)">
-                    <img class="h-10 w-auto" src="img/AAC_logo.png" alt="AAC Logo">
-                    <span class="font-aac text-xl hidden md:block tracking-widest"><span class="text-white">AT ALL</span> <span class="text-aac-yellow">COST</span></span>
+                <div class="flex-shrink-0 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <img class="h-10 w-auto" src="img/AAC-logo-1.svg" alt="AAC Logo">
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-8">
                         <a href="#home" class="hover:text-aac-yellow transition-colors font-display text-xs tracking-widest uppercase">Accueil</a>
                         <a href="#about" class="hover:text-aac-yellow transition-colors font-display text-xs tracking-widest uppercase">Vision</a>
-                        <a href="#events" class="hover:text-aac-yellow transition-colors font-display text-xs tracking-widest uppercase">Événements</a>
                         <a href="#team" class="hover:text-aac-yellow transition-colors font-display text-xs tracking-widest uppercase">Équipe</a>
-                        <a href="#contact" class="bg-aac-yellow text-black hover:bg-white px-5 py-2 transition-all font-aac text-sm font-bold rounded-sm skew-x-[-10deg]">
-                            <span class="block skew-x-[10deg]">REJOINDRE</span>
+                        <a href="#contact" class="bg-aac-yellow text-black hover:bg-white px-5 py-2 transition-all font-display text-xs font-bold rounded">
+                            REJOINDRE
                         </a>
                     </div>
                 </div>
@@ -110,288 +116,205 @@
                 </div>
             </div>
         </div>
-        <div id="mobile-menu" class="md:hidden hidden bg-aac-dark border-t border-gray-800 absolute w-full">
-            <div class="px-2 pt-2 pb-3 space-y-1 text-center bg-aac-dark">
-                <a href="#home" class="block px-3 py-2 font-display hover:text-aac-yellow">ACCUEIL</a>
-                <a href="#team" class="block px-3 py-2 font-display hover:text-aac-yellow">ÉQUIPE</a>
-                <a href="#contact" class="block px-3 py-2 font-display text-aac-yellow">REJOINDRE</a>
-            </div>
-        </div>
     </nav>
 
-    <!-- HERO SECTION (Refonte Visuelle) -->
+    <!-- HERO SECTION (STYLE BASE RÉTABLI) -->
     <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
-        <!-- Background -->
         <div class="absolute inset-0 z-0">
-            <img src="img_vdo/brain_neural_network2.png" alt="Neural Network" class="w-full h-full object-cover opacity-30 scale-105 animate-[pulse_10s_ease-in-out_infinite]">
-            <div class="absolute inset-0 bg-gradient-to-b from-aac-dark/90 via-aac-dark/50 to-aac-dark"></div>
-            <!-- Grid Pattern Overlay -->
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIiBmaWxsPSJub25lIiBzdHJva2U9InJnYmEoMjU1LCAyNTUsIDI1NSwgMC4wMykiIHN0cm9rZS13aWR0aD0iMSI+PHBhdGggZD0iTTAgMGg0MHY0MEgwWiIvPjwvc3ZnPg==')] opacity-50"></div>
+            <img src="img_vdo/brain_neural_network2.png" alt="Neural Network" class="w-full h-full object-cover opacity-40">
+            <div class="absolute inset-0 bg-gradient-to-t from-aac-dark via-aac-dark/60 to-transparent"></div>
         </div>
 
-        <div class="relative z-10 text-center px-4 max-w-7xl mx-auto mt-16">
-            <!-- TITRE -->
-            <div class="mb-6 relative inline-block">
-                <h1 class="text-6xl md:text-8xl lg:text-9xl font-aac leading-none tracking-normal drop-shadow-[0_0_15px_rgba(255,192,0,0.3)]">
-                    <span class="text-white block md:inline">AT ALL</span>
-                    <span class="text-aac-yellow block md:inline md:ml-4">COST</span>
-                </h1>
-            </div>
+        <div class="relative z-10 text-center px-4 max-w-7xl mx-auto">
+            <!-- TITRE ET POLICE DE BASE -->
+            <h1 class="text-5xl md:text-8xl font-aac mb-6 text-white tracking-wider">
+                AT ALL <span class="text-aac-yellow">COST</span>
+            </h1>
 
-            <!-- LÉGENDE STYLEE -->
-            <div class="flex items-center justify-center gap-4 mb-10">
-                <div class="h-[1px] w-12 md:w-24 bg-gradient-to-r from-transparent to-aac-yellow"></div>
-                <p class="text-sm md:text-xl text-gray-300 font-display tracking-[0.3em] uppercase">
-                    Intelligence Artificielle & Innovation
-                </p>
-                <div class="h-[1px] w-12 md:w-24 bg-gradient-to-l from-transparent to-aac-yellow"></div>
-            </div>
-
-            <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-12 font-light leading-relaxed">
-                Repousser les limites. Maîtriser l'IA. <br class="hidden md:block">
-                Une communauté étudiante pour construire le futur.
-            </p>
+            <h2 class="text-xl md:text-3xl text-gray-300 font-display tracking-[0.2em] uppercase mb-12">
+                Intelligence Artificielle & Innovation
+            </h2>
 
             <div class="flex flex-col sm:flex-row gap-6 justify-center">
-                <a href="#contact" class="group relative px-8 py-4 bg-transparent border border-aac-yellow text-aac-yellow font-display font-bold hover:text-black overflow-hidden transition-colors">
-                    <span class="absolute w-0 h-full bg-aac-yellow left-0 top-0 transition-all duration-300 group-hover:w-full -z-10"></span>
+                <a href="#contact" class="px-8 py-4 bg-aac-yellow text-black font-display font-bold hover:bg-white transition-all rounded">
                     NOUS REJOINDRE
                 </a>
-                <a href="#about" class="px-8 py-4 bg-white/5 border border-white/10 text-white font-display hover:bg-white/10 transition-all backdrop-blur-sm">
-                    DÉCOUVRIR
+                <a href="#about" class="px-8 py-4 border border-white/20 text-white font-display hover:bg-white/10 transition-all rounded">
+                    EN SAVOIR PLUS
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- ABOUT SECTION -->
+    <!-- VISION / ABOUT -->
     <section id="about" class="py-24 bg-aac-dark border-t border-white/5">
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div class="relative group">
-                <div class="absolute -inset-1 bg-gradient-to-r from-aac-yellow to-aac-blue rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-                <img src="img_vdo/brain_poster.png" alt="AI Brain" class="relative rounded-lg shadow-2xl w-full object-cover border border-white/10 bg-gray-900 aspect-[4/5]"
+            <div class="relative">
+                <img src="img_vdo/brain_poster.png" alt="AI Brain" class="rounded-lg shadow-2xl w-full max-w-md mx-auto border border-white/10"
                      onerror="this.src='https://placehold.co/500x700/111/FFC000?text=AI+Vision'">
             </div>
             <div>
-                <h2 class="text-4xl font-aac text-white mb-8">NOTRE <span class="text-aac-yellow">VISION</span></h2>
+                <h2 class="text-4xl font-aac text-white mb-8 uppercase">Notre Vision</h2>
                 <p class="text-gray-300 text-lg leading-relaxed mb-6 font-tech">
-                    At All Cost est un incubateur de talents et d'idées. Nous ne nous contentons pas d'observer la révolution de l'IA, nous voulons en être les acteurs.
+                    At All Cost est un incubateur de talents. Nous brisons les barrières académiques pour offrir une expérience pratique et concrète de l'IA.
                 </p>
-                <p class="text-gray-300 text-lg leading-relaxed mb-8 font-tech">
-                    Notre mission est double : <strong>Démocratiser</strong> l'accès aux connaissances techniques et <strong>Innover</strong> à travers des projets concrets.
-                </p>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div class="p-6 border border-white/10 rounded bg-aac-card hover:bg-white/5 transition-colors">
-                        <i class="fas fa-brain text-aac-yellow text-3xl mb-4"></i>
-                        <h4 class="font-bold font-display text-white mb-2">Deep Learning</h4>
-                        <p class="text-sm text-gray-500">Formation avancée sur les réseaux de neurones.</p>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-4 bg-white/5 border border-white/5 rounded text-center">
+                        <i class="fas fa-brain text-aac-yellow mb-2 text-2xl"></i>
+                        <p class="font-bold">Deep Learning</p>
                     </div>
-                    <div class="p-6 border border-white/10 rounded bg-aac-card hover:bg-white/5 transition-colors">
-                        <i class="fas fa-users text-aac-blue text-3xl mb-4"></i>
-                        <h4 class="font-bold font-display text-white mb-2">Communauté</h4>
-                        <p class="text-sm text-gray-500">Réseau d'entraide et de partage.</p>
+                    <div class="p-4 bg-white/5 border border-white/5 rounded text-center">
+                        <i class="fas fa-microchip text-aac-blue mb-2 text-2xl"></i>
+                        <p class="font-bold">Innovation</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- TEAM SECTION (Organigramme demandé) -->
-    <section id="team" class="py-24 bg-aac-dark relative overflow-hidden">
-        <!-- Background Elements -->
-        <div class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-aac-blue/5 to-transparent pointer-events-none"></div>
+    <!-- ÉQUIPE / ORGANIGRAMME (VOTRE VERSION) -->
+    <section id="team" class="py-24 bg-aac-dark relative border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-aac text-center mb-20 uppercase tracking-widest">L'Organigramme</h2>
 
-        <div class="max-w-7xl mx-auto px-4 relative z-10">
-            <div class="text-center mb-20">
-                <h2 class="text-4xl font-aac text-white mb-4">L'ORGANIGRAMME</h2>
-                <div class="w-24 h-1 bg-aac-yellow mx-auto"></div>
-            </div>
-
-            <div class="flex flex-col items-center w-full">
-
-                <!-- NIVEAU 1 : PRÉSIDENCE & TRÉSORERIE -->
-                <div class="flex flex-col md:flex-row justify-center gap-8 mb-12 w-full max-w-2xl">
-                    <!-- Président -->
-                    <div class="member-card rounded-lg p-6 flex-1 border-t-4 border-t-aac-yellow bg-gradient-to-b from-aac-yellow/10 to-transparent">
-                        <span class="role-badge bg-aac-yellow text-black mb-3">PRÉSIDENT</span>
-                        <h3 class="font-display font-bold text-2xl text-white mb-1">Asma Kajeiou</h3>
-                        <p class="text-gray-400 font-tech text-sm">Stratégie & Vision</p>
+            <div class="org-chart">
+                <!-- Niveau 1 : Président & Trésorier -->
+                <div class="org-level">
+                    <div class="member-card" style="border-color: #FFC000; transform: scale(1.1);">
+                        <span class="role-badge" style="background: #FFC000; color: black;">PRÉSIDENT</span>
+                        <div class="member-name">Asma Kajeiou</div>
+                        <div style="font-size: 0.8rem; color: #888;">Stratégie & Vision</div>
                     </div>
-                    <!-- Trésorier -->
-                    <div class="member-card rounded-lg p-6 flex-1 border-t-4 border-t-aac-yellow bg-gradient-to-b from-aac-yellow/10 to-transparent">
-                        <span class="role-badge bg-aac-yellow text-black mb-3">TRÉSORIER</span>
-                        <h3 class="font-display font-bold text-2xl text-white mb-1">Lucas Gournier</h3>
-                        <p class="text-gray-400 font-tech text-sm">Finances</p>
+                    <div class="member-card" style="border-color: #FFC000; transform: scale(1.1);">
+                        <span class="role-badge" style="background: #FFC000; color: black;">TRÉSORIER</span>
+                        <div class="member-name">Lucas Gournier</div>
+                        <div style="font-size: 0.8rem; color: #888;">Finances</div>
                     </div>
                 </div>
 
-                <!-- Connecteurs -->
-                <div class="h-8 w-px bg-gray-700 mb-8"></div>
-
-                <!-- NIVEAU 2 : SECRÉTAIRES -->
-                <div class="flex flex-col md:flex-row justify-center gap-6 mb-16 w-full max-w-2xl">
-                    <div class="member-card rounded-lg p-5 flex-1 border-l-2 border-l-gray-500">
-                        <span class="role-badge bg-gray-700 text-white mb-2">SECRÉTAIRE</span>
-                        <h3 class="font-display font-bold text-xl text-white">Dhaker Meddeb</h3>
-                        <p class="text-gray-500 text-xs">Opérations</p>
+                <!-- Niveau 2 : Bureau -->
+                <div class="org-level">
+                    <div class="member-card">
+                        <span class="role-badge">SECRÉTAIRE</span>
+                        <div class="member-name">Dhaker Meddeb</div>
+                        <div style="font-size: 0.8rem; color: #888;">Opérations</div>
                     </div>
-                    <div class="member-card rounded-lg p-5 flex-1 border-l-2 border-l-gray-500">
-                        <span class="role-badge bg-gray-700 text-white mb-2">SECRÉTAIRE</span>
-                        <h3 class="font-display font-bold text-xl text-white">Sanem S</h3>
-                        <p class="text-gray-500 text-xs">Opérations</p>
+                    <div class="member-card">
+                        <span class="role-badge">SECRÉTAIRE</span>
+                        <div class="member-name">Sanem S</div>
+                        <div style="font-size: 0.8rem; color: #888;">Opérations</div>
                     </div>
                 </div>
 
-                <!-- NIVEAU 3 : PÔLES -->
-                <h3 class="text-aac-blue font-display text-xl mb-8 tracking-widest uppercase border-b border-aac-blue/30 pb-2">Les Pôles</h3>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
-
-                    <!-- Pôle RH -->
-                    <div class="member-card rounded-lg p-6 border-l-4 border-l-aac-blue hover:bg-aac-blue/5 h-full">
-                        <div class="mb-4">
-                            <span class="role-badge bg-aac-blue text-black">RESSOURCES HUMAINES</span>
-                        </div>
-                        <ul class="space-y-3">
-                            <li class="font-bold text-white text-lg">Myriam Bensaid</li>
-                            <li class="font-bold text-white text-lg">Amira Habes</li>
-                        </ul>
-                        <p class="mt-4 text-xs text-aac-blue font-mono border-t border-aac-blue/20 pt-2">Recrutement & Suivi</p>
+                <!-- Niveau 3 : Pôles -->
+                <div class="org-level">
+                    <!-- RH -->
+                    <div class="member-card" style="border-left: 3px solid #00A8E8;">
+                        <span class="role-badge" style="background: #00A8E8; color: black;">PÔLE RESSOURCES HUMAINES</span>
+                        <div class="member-name">Myriam Bensaid</div>
+                        <div class="member-name">Amira Habes</div>
+                        <div style="font-size: 0.8rem; color: #888; margin-top: 10px;">Recrutement & Suivi</div>
                     </div>
-
-                    <!-- Pôle Com -->
-                    <div class="member-card rounded-lg p-6 border-l-4 border-l-aac-blue hover:bg-aac-blue/5 h-full">
-                        <div class="mb-4">
-                            <span class="role-badge bg-aac-blue text-black">COM & DESIGN</span>
-                        </div>
-                        <ul class="space-y-2">
-                            <li class="font-bold text-white">Samia Barhili</li>
-                            <li class="font-bold text-white">Imran El Azri</li>
-                            <li class="font-bold text-white">Malak Abdou</li>
-                            <li class="font-bold text-white">Kaxter Daoudi</li>
-                            <li class="font-bold text-white">Alaa Ouazbir</li>
-                        </ul>
-                        <p class="mt-4 text-xs text-aac-blue font-mono border-t border-aac-blue/20 pt-2">Réseaux & Image</p>
+                    <!-- COM -->
+                    <div class="member-card" style="border-left: 3px solid #00A8E8;">
+                        <span class="role-badge" style="background: #00A8E8; color: black;">PÔLE COMMUNICATION & DESIGN</span>
+                        <div class="member-name">Samia Barhili</div>
+                        <div class="member-name">Imran El Azri</div>
+                        <div class="member-name">Malak Abdou</div>
+                        <div class="member-name">Kaxter Daoudi</div>
+                        <div class="member-name">Alaa Ouazbir</div>
+                        <div style="font-size: 0.8rem; color: #888; margin-top: 10px;">Réseaux & Image</div>
                     </div>
-
-                    <!-- Pôle Event -->
-                    <div class="member-card rounded-lg p-6 border-l-4 border-l-aac-blue hover:bg-aac-blue/5 h-full">
-                        <div class="mb-4">
-                            <span class="role-badge bg-aac-blue text-black">ÉVÉNEMENTIEL</span>
-                        </div>
-                        <ul class="space-y-3">
-                            <li class="font-bold text-white text-lg">Yasmina Hida</li>
-                            <li class="font-bold text-white text-lg">Bouchra Zamoum</li>
-                            <li class="font-bold text-white text-lg">Hajar Achour</li>
-                        </ul>
-                        <p class="mt-4 text-xs text-aac-blue font-mono border-t border-aac-blue/20 pt-2">Hackathons & Meetups</p>
+                    <!-- EVENT -->
+                    <div class="member-card" style="border-left: 3px solid #00A8E8;">
+                        <span class="role-badge" style="background: #00A8E8; color: black;">PÔLE ÉVÉNEMENTIEL</span>
+                        <div class="member-name">Yasmina Hida</div>
+                        <div class="member-name">Bouchra Zamoum</div>
+                        <div class="member-name">Hajar Achour</div>
+                        <div style="font-size: 0.8rem; color: #888; margin-top: 10px;">Hackathons & Meetups</div>
                     </div>
-
-                    <!-- Pôle Relations -->
-                    <div class="member-card rounded-lg p-6 border-l-4 border-l-aac-blue hover:bg-aac-blue/5 h-full">
-                        <div class="mb-4">
-                            <span class="role-badge bg-aac-blue text-black">RELATIONS ENT.</span>
-                        </div>
-                        <ul class="space-y-3">
-                            <li class="font-bold text-white text-lg">Tiziri Bouchichene</li>
-                            <li class="font-bold text-white text-lg">Yaasmine Mardak</li>
-                        </ul>
-                        <p class="mt-4 text-xs text-aac-blue font-mono border-t border-aac-blue/20 pt-2">Partenariats</p>
+                    <!-- RELATIONS -->
+                    <div class="member-card" style="border-left: 3px solid #00A8E8;">
+                        <span class="role-badge" style="background: #00A8E8; color: black;">PÔLE RELATIONS ENTREPRISE</span>
+                        <div class="member-name">Tiziri Bouchichene</div>
+                        <div class="member-name">Yaasmine Mardak</div>
+                        <div style="font-size: 0.8rem; color: #888; margin-top: 10px;">Partenariats</div>
                     </div>
-
                 </div>
             </div>
         </div>
     </section>
 
     <!-- CONTACT SECTION -->
-    <section id="contact" class="py-24 bg-gradient-to-t from-black to-aac-dark border-t border-gray-900">
+    <section id="contact" class="py-24 bg-gradient-to-t from-black to-aac-dark border-t border-white/10">
         <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-4xl font-aac text-center mb-16">CONTACT & <span class="text-aac-yellow">CANDIDATURE</span></h2>
+            <h2 class="text-4xl font-aac text-center mb-16 uppercase tracking-widest">Contact</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-
-                <!-- GAUCHE : INFOS & RÉSEAUX -->
+                <!-- INFOS CONTACT -->
                 <div class="md:col-span-1 space-y-10">
                     <div>
-                        <h3 class="text-aac-yellow font-display text-xl mb-6 flex items-center">
-                            <span class="w-2 h-2 bg-aac-yellow mr-3 rounded-full"></span>
-                            NOUS CONTACTER
-                        </h3>
+                        <h3 class="text-aac-yellow font-display text-xl mb-6">REJOINDRE LE LAB</h3>
                         <div class="space-y-4">
-                            <a href="mailto:atallcostai@gmail.com" class="flex items-center group p-4 bg-white/5 rounded-lg border border-white/5 hover:border-aac-yellow/50 transition-all">
-                                <div class="w-10 h-10 rounded bg-black flex items-center justify-center mr-4 text-gray-400 group-hover:text-aac-yellow transition-colors">
+                            <div class="flex items-center group">
+                                <div class="w-10 h-10 rounded bg-white/5 flex items-center justify-center mr-4 border border-white/10 group-hover:bg-aac-yellow group-hover:text-black transition-all">
                                     <i class="fas fa-envelope"></i>
                                 </div>
-                                <span class="text-gray-300 group-hover:text-white transition-colors text-sm">atallcostai@gmail.com</span>
-                            </a>
-                            <div class="flex items-center group p-4 bg-white/5 rounded-lg border border-white/5">
-                                <div class="w-10 h-10 rounded bg-black flex items-center justify-center mr-4 text-gray-400">
+                                <a href="mailto:atallcostai@gmail.com" class="text-gray-300 hover:text-white transition-colors">atallcostai@gmail.com</a>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 rounded bg-white/5 flex items-center justify-center mr-4 border border-white/10">
                                     <i class="fas fa-map-marker-alt"></i>
                                 </div>
-                                <span class="text-gray-300 text-sm">Campus - Paris</span>
+                                <span class="text-gray-300">Paris - France</span>
                             </div>
                         </div>
                     </div>
 
                     <div>
-                        <h3 class="text-aac-yellow font-display text-xl mb-6 flex items-center">
-                            <span class="w-2 h-2 bg-aac-yellow mr-3 rounded-full"></span>
-                            RÉSEAUX SOCIAUX
-                        </h3>
+                        <h3 class="text-aac-yellow font-display text-xl mb-6">RÉSEAUX</h3>
                         <div class="flex space-x-4">
-                            <a href="#" class="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center hover:bg-aac-yellow hover:text-black hover:-translate-y-1 transition-all">
+                            <a href="https://www.instagram.com/atallcost.ai" class="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center hover:bg-aac-yellow hover:text-black hover:-translate-y-1 transition-all">
                                 <i class="fab fa-instagram text-xl"></i>
                             </a>
-                            <a href="#" class="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center hover:bg-blue-600 hover:text-white hover:-translate-y-1 transition-all">
+                            <a href="https://www.linkedin.com/company/atallcost/posts/?feedView=all" class="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center hover:bg-blue-600 hover:text-white hover:-translate-y-1 transition-all">
                                 <i class="fab fa-linkedin-in text-xl"></i>
                             </a>
-                            <a href="#" class="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center hover:bg-indigo-500 hover:text-white hover:-translate-y-1 transition-all">
+                            <a href="https://discord.com/invite/eu2X2DqUyR" class="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center hover:bg-indigo-500 hover:text-white hover:-translate-y-1 transition-all">
                                 <i class="fab fa-discord text-xl"></i>
                             </a>
                         </div>
                     </div>
                 </div>
 
-                <!-- DROITE : FORMULAIRE -->
+                <!-- FORMULAIRE -->
                 <div class="md:col-span-2">
-                    <form id="contact-form" class="space-y-6 bg-white/5 p-8 rounded-2xl border border-white/5 relative overflow-hidden group">
-                        <!-- Decorative glow -->
-                        <div class="absolute -top-10 -right-10 w-40 h-40 bg-aac-yellow/10 rounded-full blur-3xl group-hover:bg-aac-yellow/20 transition-all duration-500"></div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 relative z-10">
+                    <form id="contact-form" class="space-y-6 bg-white/5 p-8 rounded border border-white/5">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div>
-                                <label class="block text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Nom complet</label>
-                                <input type="text" name="user_name" required class="w-full bg-black/40 border border-gray-700 text-white p-4 rounded focus:border-aac-yellow focus:ring-1 focus:ring-aac-yellow outline-none transition-all placeholder-gray-600" placeholder="John Doe">
+                                <label class="block text-gray-400 text-xs uppercase mb-2">Nom</label>
+                                <input type="text" name="user_name" required class="w-full bg-black/50 border border-gray-700 text-white p-3 rounded focus:border-aac-yellow outline-none transition-all">
                             </div>
                             <div>
-                                <label class="block text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Email</label>
-                                <input type="email" name="user_email" required class="w-full bg-black/40 border border-gray-700 text-white p-4 rounded focus:border-aac-yellow focus:ring-1 focus:ring-aac-yellow outline-none transition-all placeholder-gray-600" placeholder="john@example.com">
+                                <label class="block text-gray-400 text-xs uppercase mb-2">Email</label>
+                                <input type="email" name="user_email" required class="w-full bg-black/50 border border-gray-700 text-white p-3 rounded focus:border-aac-yellow outline-none transition-all">
                             </div>
                         </div>
-
-                        <div class="relative z-10">
-                            <label class="block text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Pôle souhaité</label>
-                            <div class="relative">
-                                <select name="role" class="w-full bg-black/40 border border-gray-700 text-white p-4 rounded focus:border-aac-yellow focus:ring-1 focus:ring-aac-yellow outline-none transition-all appearance-none cursor-pointer">
-                                    <option value="membre">Membre Actif</option>
-                                    <option value="tech">Pôle Tech / Dev</option>
-                                    <option value="com">Communication & Design</option>
-                                    <option value="event">Événementiel</option>
-                                    <option value="partenariat">Relations Entreprise</option>
-                                </select>
-                                <i class="fas fa-chevron-down absolute right-4 top-4 text-gray-500 pointer-events-none"></i>
-                            </div>
+                        <div>
+                            <label class="block text-gray-400 text-xs uppercase mb-2">Pôle</label>
+                            <select name="role" class="w-full bg-black/50 border border-gray-700 text-white p-3 rounded focus:border-aac-yellow outline-none transition-all cursor-pointer">
+                                <option value="membre">Membre Actif</option>
+                                <option value="tech">Technique</option>
+                                <option value="com">Com & Design</option>
+                                <option value="event">Événementiel</option>
+                            </select>
                         </div>
-
-                        <div class="relative z-10">
-                            <label class="block text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Message</label>
-                            <textarea name="message" rows="4" required class="w-full bg-black/40 border border-gray-700 text-white p-4 rounded focus:border-aac-yellow focus:ring-1 focus:ring-aac-yellow outline-none transition-all placeholder-gray-600" placeholder="Dis-nous pourquoi tu veux rejoindre l'aventure..."></textarea>
+                        <div>
+                            <label class="block text-gray-400 text-xs uppercase mb-2">Message</label>
+                            <textarea name="message" rows="4" required class="w-full bg-black/50 border border-gray-700 text-white p-3 rounded focus:border-aac-yellow outline-none transition-all"></textarea>
                         </div>
-
-                        <button type="submit" id="submit-btn" class="w-full bg-gradient-to-r from-aac-yellow to-yellow-500 text-black font-aac font-bold py-4 rounded hover:from-white hover:to-gray-200 hover:scale-[1.01] transition-all uppercase tracking-widest text-lg shadow-[0_0_20px_rgba(255,192,0,0.3)] relative z-10">
-                            ENVOYER LA CANDIDATURE
+                        <button type="submit" id="submit-btn" class="w-full bg-aac-yellow text-black font-display font-bold py-4 rounded hover:bg-white transition-all uppercase tracking-widest">
+                            Envoyer la candidature
                         </button>
                     </form>
                 </div>
@@ -402,17 +325,17 @@
     <!-- FOOTER -->
     <footer class="bg-black py-10 border-t border-gray-900">
         <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
-            <div class="mb-4 md:mb-0 flex items-center">
-                <img src="logo/vrai_logo_aac.png" alt="AAC" class="h-8 opacity-50 grayscale hover:grayscale-0 transition-all mr-3">
-                <span class="text-gray-700 font-aac text-xs tracking-widest">AT ALL COST</span>
+            <div class="flex items-center">
+                <img src="img/AAC-logo-1.svg" alt="AAC" class="h-6 opacity-40 mr-4">
+                <span class="text-gray-700 font-aac text-xs tracking-widest uppercase">At All Cost</span>
             </div>
-            <div class="text-gray-600 text-xs font-tech tracking-wider">
-                &copy; 2024 At All Cost. Designed by AI Lab.
+            <div class="text-gray-700 text-xs font-tech tracking-wider mt-4 md:mt-0">
+                &copy; 2026 At All Cost AI Lab. All rights reserved.
             </div>
         </div>
     </footer>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- LOGIQUE JS -->
     <script>
         // --- CONFIGURATION EMAILJS ---
         // Remplace les valeurs ci-dessous par les tiennes depuis ton compte EmailJS
