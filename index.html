@@ -1,685 +1,413 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>At All Cost - AI Lab</title>
-    <!-- Import de polices Google Fonts pour remplacer Android 101 et assurer le style Cyberpunk -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <link href="img/AAC_logo.png" rel="icon">
-    <!-- FontAwesome pour les icônes -->
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- SDK EmailJS (Nécessaire pour l'envoi d'emails) -->
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <!-- SDK EmailJS -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        aac: {
+                            yellow: '#FFC000',
+                            dark: '#050505',
+                            gray: '#1A1A1A',
+                            card: 'rgba(255, 255, 255, 0.03)',
+                            blue: '#00A8E8'
+                        }
+                    },
+                    fontFamily: {
+                        aac: ['Android101', 'Orbitron', 'sans-serif'],
+                        tech: ['Rajdhani', 'sans-serif'],
+                        display: ['Orbitron', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        /* --- RESET & VARIABLES --- */
-        :root {
-            --primary-yellow: #FFC000;
-            --secondary-blue: #00A8E8; /* Ajout pour contraste tech */
-            --bg-black: #050505;
-            --text-white: #FFFFFF;
-            --text-grey: #B0B0B0;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --border-color: rgba(255, 192, 0, 0.3);
-            
-            /* Typographie */
-            --font-title: 'Orbitron', sans-serif; /* Remplacement de Android 101 */
-            --font-body: 'Open Sans', sans-serif;
+        @font-face {
+            font-family: 'Android101';
+            src: url('font/android101.ttf') format('truetype');
+            font-display: swap;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: var(--bg-black);
-            color: var(--text-white);
-            font-family: var(--font-body);
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        /* --- TYPOGRAPHIE --- */
-        h1, h2, h3, h4, .nav-link, .btn {
-            font-family: var(--font-title);
-            text-transform: uppercase;
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            line-height: 1.1;
-            margin-bottom: 1rem;
-            text-shadow: 0 0 10px rgba(255, 192, 0, 0.3);
-        }
-
-        h2 {
-            font-size: 2.5rem;
-            color: var(--primary-yellow);
-            margin-bottom: 2rem;
-            position: relative;
-            display: inline-block;
-        }
-
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--primary-yellow);
-            box-shadow: 0 0 10px var(--primary-yellow);
-        }
-
-        /* --- NAVIGATION --- */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(5, 5, 5, 0.9);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            border-bottom: 1px solid var(--border-color);
-            padding: 1rem 5%;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo-text {
-            font-family: var(--font-title);
-            font-weight: 900;
-            font-size: 1.5rem;
-            color: var(--text-white);
-            letter-spacing: 2px;
-        }
-        
-        .logo-text span {
-            color: var(--primary-yellow);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-link {
-            color: var(--text-white);
-            text-decoration: none;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            transition: color 0.3s ease;
-            cursor: pointer;
+        /* Hero Glitch Effect */
+        .glitch-text {
             position: relative;
         }
 
-        .nav-link:hover, .nav-link.active {
-            color: var(--primary-yellow);
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary-yellow);
-            transition: width 0.3s ease;
-        }
-
-        .nav-link:hover::after, .nav-link.active::after {
-            width: 100%;
-        }
-
-        .cta-button {
-            background-color: transparent;
-            border: 2px solid var(--primary-yellow);
-            color: var(--primary-yellow);
-            padding: 0.5rem 1.5rem;
-            font-family: var(--font-title);
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-
-        .cta-button:hover {
-            background-color: var(--primary-yellow);
-            color: var(--bg-black);
-            box-shadow: 0 0 15px rgba(255, 192, 0, 0.5);
-        }
-
-        /* --- MOBILE MENU --- */
-        .menu-toggle {
-            display: none;
-            color: var(--primary-yellow);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* --- SECTIONS --- */
-        main {
-            padding-top: 80px; /* Espace pour le header fixe */
-            min-height: 100vh;
-        }
-
-        section {
-            padding: 4rem 5%;
-            display: none; /* Caché par défaut, géré par JS */
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        section.active-section {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- HERO SECTION --- */
-        #hero {
-            height: calc(100vh - 80px);
-            display: flex; /* Flex pour centrer le contenu */
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background: radial-gradient(circle at center, rgba(20, 20, 20, 1) 0%, rgba(5, 5, 5, 1) 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Effet de grille cyberpunk en fond */
-        #hero::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            top: -50%;
-            left: -50%;
-            background-image: 
-                linear-gradient(rgba(255, 192, 0, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 192, 0, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            transform: perspective(500px) rotateX(60deg);
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 800px;
-        }
-
-        .jp-text {
-            font-family: 'Open Sans', sans-serif;
-            color: var(--primary-yellow);
-            letter-spacing: 5px;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-
-        .highlight {
-            color: var(--primary-yellow);
-        }
-
-        .hero-buttons {
-            margin-top: 2rem;
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        .btn-primary {
-            background-color: var(--primary-yellow);
-            color: var(--bg-black);
-            padding: 1rem 2rem;
-            font-weight: 700;
-            text-decoration: none;
-            border: 2px solid var(--primary-yellow);
-            transition: all 0.3s;
-        }
-
-        .btn-primary:hover {
-            box-shadow: 0 0 20px rgba(255, 192, 0, 0.6);
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--text-white);
-            padding: 1rem 2rem;
-            font-weight: 700;
-            text-decoration: none;
-            border: 2px solid var(--text-white);
-            transition: all 0.3s;
-        }
-
-        .btn-outline:hover {
-            border-color: var(--primary-yellow);
-            color: var(--primary-yellow);
-        }
-
-        /* --- ABOUT & CHIFFRES --- */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .stat-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--border-color);
-            padding: 2rem;
-            text-align: center;
-            border-radius: 5px;
-            transition: transform 0.3s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 192, 0, 0.1);
-        }
-
-        .stat-number {
-            font-family: var(--font-title);
-            font-size: 3rem;
-            color: var(--primary-yellow);
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--text-grey);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* --- ORGANIGRAMME --- */
-        .org-chart {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .org-level {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            position: relative;
-        }
-        
-        /* Lignes de connexion simplifiées */
-        .org-level:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            bottom: -2rem;
-            width: 2px;
-            height: 2rem;
-            background: var(--border-color);
-        }
-
+        /* Cartes Membres */
         .member-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--border-color);
-            padding: 1.5rem;
-            width: 200px;
-            text-align: center;
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
-
-        .member-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 2px;
-            height: 100%;
-            background: var(--primary-yellow);
+        .member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         .role-badge {
-            background: var(--primary-yellow);
-            color: var(--bg-black);
             font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
             padding: 2px 8px;
+            border-radius: 4px;
             font-weight: bold;
             display: inline-block;
             margin-bottom: 0.5rem;
-            font-family: var(--font-title);
         }
 
-        .member-name {
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-bottom: 0.2rem;
-        }
-
-        /* --- FORMULAIRE --- */
-        .form-container {
-            background: var(--glass-bg);
-            padding: 3rem;
-            border: 1px solid var(--border-color);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-grey);
-            font-size: 0.9rem;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid #333;
-            color: var(--text-white);
-            font-family: var(--font-body);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-yellow);
-        }
-
-        /* --- FOOTER --- */
-        footer {
-            background: #000;
-            padding: 2rem 5%;
-            text-align: center;
-            border-top: 1px solid #222;
-            margin-top: 4rem;
-        }
-
-        .footer-content p {
-            color: var(--text-grey);
-            font-size: 0.8rem;
-        }
-        
-        .social-links {
-            margin-top: 1rem;
-        }
-        
-        .social-links a {
-            color: var(--text-white);
-            margin: 0 10px;
-            font-size: 1.2rem;
-            transition: color 0.3s;
-        }
-        
-        .social-links a:hover {
-            color: var(--primary-yellow);
-        }
-
-        /* --- RESPONSIVE --- */
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            h2 { font-size: 2rem; }
-            
-            .nav-links {
-                position: fixed;
-                top: 70px;
-                left: 0;
-                width: 100%;
-                background: black;
-                flex-direction: column;
-                padding: 2rem;
-                border-bottom: 1px solid var(--border-color);
-                transform: translateY(-150%);
-                transition: transform 0.3s ease;
-            }
-
-            .nav-links.active {
-                transform: translateY(0);
-            }
-
-            .menu-toggle {
-                display: block;
-            }
-        }
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #FFC000; border-radius: 4px; }
     </style>
 </head>
-<body>
+<body class="bg-aac-dark text-white font-tech overflow-x-hidden selection:bg-aac-yellow selection:text-black">
 
-    <!-- HEADER -->
-    <header>
-        <nav>
-            <div class="logo-container">
-                <!-- SVG Logo Placeholder inline -->
-                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M50 5L95 25V75L50 95L5 75V25L50 5Z" stroke="#FFC000" stroke-width="5"/>
-                    <path d="M50 25L70 35V65L50 75L30 65V35L50 25Z" fill="#FFC000" fill-opacity="0.2" stroke="#FFC000" stroke-width="2"/>
-                </svg>
-                <div class="logo-text">AT ALL <span>COST</span></div>
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full z-50 bg-aac-dark/90 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0 cursor-pointer flex items-center gap-3" onclick="window.scrollTo(0,0)">
+                    <img class="h-10 w-auto" src="img/AAC_logo.png" alt="AAC Logo">
+                    <span class="font-aac text-xl hidden md:block tracking-widest"><span class="text-white">AT ALL</span> <span class="text-aac-yellow">COST</span></span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="hover:text-aac-yellow transition-colors font-display text-xs tracking-widest uppercase">Accueil</a>
+                        <a href="#about" class="hover:text-aac-yellow transition-colors font-display text-xs tracking-widest uppercase">Vision</a>
+                        <a href="#events" class="hover:text-aac-yellow transition-colors font-display text-xs tracking-widest uppercase">Événements</a>
+                        <a href="#team" class="hover:text-aac-yellow transition-colors font-display text-xs tracking-widest uppercase">Équipe</a>
+                        <a href="#contact" class="bg-aac-yellow text-black hover:bg-white px-5 py-2 transition-all font-aac text-sm font-bold rounded-sm skew-x-[-10deg]">
+                            <span class="block skew-x-[10deg]">REJOINDRE</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-white hover:text-aac-yellow"><i class="fas fa-bars text-2xl"></i></button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-aac-dark border-t border-gray-800 absolute w-full">
+            <div class="px-2 pt-2 pb-3 space-y-1 text-center bg-aac-dark">
+                <a href="#home" class="block px-3 py-2 font-display hover:text-aac-yellow">ACCUEIL</a>
+                <a href="#team" class="block px-3 py-2 font-display hover:text-aac-yellow">ÉQUIPE</a>
+                <a href="#contact" class="block px-3 py-2 font-display text-aac-yellow">REJOINDRE</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION (Refonte Visuelle) -->
+    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background -->
+        <div class="absolute inset-0 z-0">
+            <img src="img_vdo/brain_neural_network2.png" alt="Neural Network" class="w-full h-full object-cover opacity-30 scale-105 animate-[pulse_10s_ease-in-out_infinite]">
+            <div class="absolute inset-0 bg-gradient-to-b from-aac-dark/90 via-aac-dark/50 to-aac-dark"></div>
+            <!-- Grid Pattern Overlay -->
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIiBmaWxsPSJub25lIiBzdHJva2U9InJnYmEoMjU1LCAyNTUsIDI1NSwgMC4wMykiIHN0cm9rZS13aWR0aD0iMSI+PHBhdGggZD0iTTAgMGg0MHY0MEgwWiIvPjwvc3ZnPg==')] opacity-50"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-4 max-w-7xl mx-auto mt-16">
+            <!-- TITRE -->
+            <div class="mb-6 relative inline-block">
+                <h1 class="text-6xl md:text-8xl lg:text-9xl font-aac leading-none tracking-normal drop-shadow-[0_0_15px_rgba(255,192,0,0.3)]">
+                    <span class="text-white block md:inline">AT ALL</span>
+                    <span class="text-aac-yellow block md:inline md:ml-4">COST</span>
+                </h1>
             </div>
 
-            <ul class="nav-links" id="navLinks">
-                <li><a class="nav-link active" onclick="showSection('hero')">Accueil</a></li>
-                <li><a class="nav-link" onclick="showSection('about')">À Propos</a></li>
-                <li><a class="nav-link" onclick="showSection('team')">L'Équipe</a></li>
-                <li><a class="nav-link" onclick="showSection('join')">Nous Rejoindre</a></li>
-            </ul>
-
-            <div class="menu-toggle" onclick="toggleMenu()">
-                <i class="fas fa-bars"></i>
-            </div>
-            
-            <a href="#" onclick="showSection('join')" class="cta-button desktop-only" style="display: none;">REJOINDRE</a>
-        </nav>
-    </header>
-
-    <main>
-        <!-- SECTION HERO -->
-        <section id="hero" class="active-section">
-            <div class="hero-content">
-                <p class="jp-text">未来は明るい (L'AVENIR EST BRILLANT)</p>
-                <h1>FORGING THE <br><span class="highlight">INTELLIGENCE</span> OF TOMORROW</h1>
-                <p style="margin: 1.5rem 0; font-size: 1.1rem; color: #ccc;">
-                    Bienvenue chez <strong>At All Cost</strong>. L'association étudiante dédiée à l'exploration, la compréhension et le développement de l'Intelligence Artificielle.
+            <!-- LÉGENDE STYLEE -->
+            <div class="flex items-center justify-center gap-4 mb-10">
+                <div class="h-[1px] w-12 md:w-24 bg-gradient-to-r from-transparent to-aac-yellow"></div>
+                <p class="text-sm md:text-xl text-gray-300 font-display tracking-[0.3em] uppercase">
+                    Intelligence Artificielle & Innovation
                 </p>
-                <div class="hero-buttons">
-                    <a class="btn-primary" onclick="showSection('join')">DEVENIR MEMBRE</a>
-                    <a class="btn-outline" onclick="showSection('about')">DÉCOUVRIR</a>
+                <div class="h-[1px] w-12 md:w-24 bg-gradient-to-l from-transparent to-aac-yellow"></div>
+            </div>
+
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-12 font-light leading-relaxed">
+                Repousser les limites. Maîtriser l'IA. <br class="hidden md:block">
+                Une communauté étudiante pour construire le futur.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <a href="#contact" class="group relative px-8 py-4 bg-transparent border border-aac-yellow text-aac-yellow font-display font-bold hover:text-black overflow-hidden transition-colors">
+                    <span class="absolute w-0 h-full bg-aac-yellow left-0 top-0 transition-all duration-300 group-hover:w-full -z-10"></span>
+                    NOUS REJOINDRE
+                </a>
+                <a href="#about" class="px-8 py-4 bg-white/5 border border-white/10 text-white font-display hover:bg-white/10 transition-all backdrop-blur-sm">
+                    DÉCOUVRIR
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="py-24 bg-aac-dark border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="relative group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-aac-yellow to-aac-blue rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                <img src="img_vdo/brain_poster.png" alt="AI Brain" class="relative rounded-lg shadow-2xl w-full object-cover border border-white/10 bg-gray-900 aspect-[4/5]"
+                     onerror="this.src='https://placehold.co/500x700/111/FFC000?text=AI+Vision'">
+            </div>
+            <div>
+                <h2 class="text-4xl font-aac text-white mb-8">NOTRE <span class="text-aac-yellow">VISION</span></h2>
+                <p class="text-gray-300 text-lg leading-relaxed mb-6 font-tech">
+                    At All Cost est un incubateur de talents et d'idées. Nous ne nous contentons pas d'observer la révolution de l'IA, nous voulons en être les acteurs.
+                </p>
+                <p class="text-gray-300 text-lg leading-relaxed mb-8 font-tech">
+                    Notre mission est double : <strong>Démocratiser</strong> l'accès aux connaissances techniques et <strong>Innover</strong> à travers des projets concrets.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="p-6 border border-white/10 rounded bg-aac-card hover:bg-white/5 transition-colors">
+                        <i class="fas fa-brain text-aac-yellow text-3xl mb-4"></i>
+                        <h4 class="font-bold font-display text-white mb-2">Deep Learning</h4>
+                        <p class="text-sm text-gray-500">Formation avancée sur les réseaux de neurones.</p>
+                    </div>
+                    <div class="p-6 border border-white/10 rounded bg-aac-card hover:bg-white/5 transition-colors">
+                        <i class="fas fa-users text-aac-blue text-3xl mb-4"></i>
+                        <h4 class="font-bold font-display text-white mb-2">Communauté</h4>
+                        <p class="text-sm text-gray-500">Réseau d'entraide et de partage.</p>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- SECTION A PROPOS -->
-        <section id="about">
-            <h2>NOTRE MISSION</h2>
-            <div style="display: flex; flex-wrap: wrap; gap: 3rem; align-items: center;">
-                <div style="flex: 1; min-width: 300px;">
-                    <p style="margin-bottom: 1rem;">
-                        Née de la volonté d'étudiants passionnés, <strong>At All Cost</strong> est un laboratoire d'idées et un terrain d'expérimentation.
-                    </p>
-                    <p style="margin-bottom: 1rem;">
-                        Nous croyons que l'IA ne doit pas rester un concept abstrait. C'est pourquoi nous organisons des hackathons, des conférences et des projets open-source pour démystifier la technologie.
-                    </p>
-                    <ul style="list-style: none; margin-top: 1.5rem;">
-                        <li style="margin-bottom: 0.5rem;"><i class="fas fa-check" style="color: var(--primary-yellow); margin-right: 10px;"></i> Workshops Techniques</li>
-                        <li style="margin-bottom: 0.5rem;"><i class="fas fa-check" style="color: var(--primary-yellow); margin-right: 10px;"></i> Projets Collaboratifs</li>
-                        <li style="margin-bottom: 0.5rem;"><i class="fas fa-check" style="color: var(--primary-yellow); margin-right: 10px;"></i> Réseautage & Carrière</li>
-                    </ul>
+    <!-- TEAM SECTION (Organigramme demandé) -->
+    <section id="team" class="py-24 bg-aac-dark relative overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-aac-blue/5 to-transparent pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 relative z-10">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl font-aac text-white mb-4">L'ORGANIGRAMME</h2>
+                <div class="w-24 h-1 bg-aac-yellow mx-auto"></div>
+            </div>
+
+            <div class="flex flex-col items-center w-full">
+
+                <!-- NIVEAU 1 : PRÉSIDENCE & TRÉSORERIE -->
+                <div class="flex flex-col md:flex-row justify-center gap-8 mb-12 w-full max-w-2xl">
+                    <!-- Président -->
+                    <div class="member-card rounded-lg p-6 flex-1 border-t-4 border-t-aac-yellow bg-gradient-to-b from-aac-yellow/10 to-transparent">
+                        <span class="role-badge bg-aac-yellow text-black mb-3">PRÉSIDENT</span>
+                        <h3 class="font-display font-bold text-2xl text-white mb-1">Asma Kajeiou</h3>
+                        <p class="text-gray-400 font-tech text-sm">Stratégie & Vision</p>
+                    </div>
+                    <!-- Trésorier -->
+                    <div class="member-card rounded-lg p-6 flex-1 border-t-4 border-t-aac-yellow bg-gradient-to-b from-aac-yellow/10 to-transparent">
+                        <span class="role-badge bg-aac-yellow text-black mb-3">TRÉSORIER</span>
+                        <h3 class="font-display font-bold text-2xl text-white mb-1">Lucas Gournier</h3>
+                        <p class="text-gray-400 font-tech text-sm">Finances</p>
+                    </div>
                 </div>
-                
-                <div style="flex: 1; min-width: 300px;">
-                    <!-- Intégration Chiffres Clés -->
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <span class="stat-number">50+</span>
-                            <span class="stat-label">Membres Actifs</span>
+
+                <!-- Connecteurs -->
+                <div class="h-8 w-px bg-gray-700 mb-8"></div>
+
+                <!-- NIVEAU 2 : SECRÉTAIRES -->
+                <div class="flex flex-col md:flex-row justify-center gap-6 mb-16 w-full max-w-2xl">
+                    <div class="member-card rounded-lg p-5 flex-1 border-l-2 border-l-gray-500">
+                        <span class="role-badge bg-gray-700 text-white mb-2">SECRÉTAIRE</span>
+                        <h3 class="font-display font-bold text-xl text-white">Dhaker Meddeb</h3>
+                        <p class="text-gray-500 text-xs">Opérations</p>
+                    </div>
+                    <div class="member-card rounded-lg p-5 flex-1 border-l-2 border-l-gray-500">
+                        <span class="role-badge bg-gray-700 text-white mb-2">SECRÉTAIRE</span>
+                        <h3 class="font-display font-bold text-xl text-white">Sanem S</h3>
+                        <p class="text-gray-500 text-xs">Opérations</p>
+                    </div>
+                </div>
+
+                <!-- NIVEAU 3 : PÔLES -->
+                <h3 class="text-aac-blue font-display text-xl mb-8 tracking-widest uppercase border-b border-aac-blue/30 pb-2">Les Pôles</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+
+                    <!-- Pôle RH -->
+                    <div class="member-card rounded-lg p-6 border-l-4 border-l-aac-blue hover:bg-aac-blue/5 h-full">
+                        <div class="mb-4">
+                            <span class="role-badge bg-aac-blue text-black">RESSOURCES HUMAINES</span>
                         </div>
-                        <div class="stat-card">
-                            <span class="stat-number">12</span>
-                            <span class="stat-label">Projets Lancés</span>
+                        <ul class="space-y-3">
+                            <li class="font-bold text-white text-lg">Myriam Bensaid</li>
+                            <li class="font-bold text-white text-lg">Amira Habes</li>
+                        </ul>
+                        <p class="mt-4 text-xs text-aac-blue font-mono border-t border-aac-blue/20 pt-2">Recrutement & Suivi</p>
+                    </div>
+
+                    <!-- Pôle Com -->
+                    <div class="member-card rounded-lg p-6 border-l-4 border-l-aac-blue hover:bg-aac-blue/5 h-full">
+                        <div class="mb-4">
+                            <span class="role-badge bg-aac-blue text-black">COM & DESIGN</span>
                         </div>
-                        <div class="stat-card">
-                            <span class="stat-number">5</span>
-                            <span class="stat-label">Partenaires</span>
+                        <ul class="space-y-2">
+                            <li class="font-bold text-white">Samia Barhili</li>
+                            <li class="font-bold text-white">Imran El Azri</li>
+                            <li class="font-bold text-white">Malak Abdou</li>
+                            <li class="font-bold text-white">Kaxter Daoudi</li>
+                            <li class="font-bold text-white">Alaa Ouazbir</li>
+                        </ul>
+                        <p class="mt-4 text-xs text-aac-blue font-mono border-t border-aac-blue/20 pt-2">Réseaux & Image</p>
+                    </div>
+
+                    <!-- Pôle Event -->
+                    <div class="member-card rounded-lg p-6 border-l-4 border-l-aac-blue hover:bg-aac-blue/5 h-full">
+                        <div class="mb-4">
+                            <span class="role-badge bg-aac-blue text-black">ÉVÉNEMENTIEL</span>
                         </div>
-                        <div class="stat-card">
-                            <span class="stat-number">24/7</span>
-                            <span class="stat-label">Disponibilité</span>
+                        <ul class="space-y-3">
+                            <li class="font-bold text-white text-lg">Yasmina Hida</li>
+                            <li class="font-bold text-white text-lg">Bouchra Zamoum</li>
+                            <li class="font-bold text-white text-lg">Hajar Achour</li>
+                        </ul>
+                        <p class="mt-4 text-xs text-aac-blue font-mono border-t border-aac-blue/20 pt-2">Hackathons & Meetups</p>
+                    </div>
+
+                    <!-- Pôle Relations -->
+                    <div class="member-card rounded-lg p-6 border-l-4 border-l-aac-blue hover:bg-aac-blue/5 h-full">
+                        <div class="mb-4">
+                            <span class="role-badge bg-aac-blue text-black">RELATIONS ENT.</span>
+                        </div>
+                        <ul class="space-y-3">
+                            <li class="font-bold text-white text-lg">Tiziri Bouchichene</li>
+                            <li class="font-bold text-white text-lg">Yaasmine Mardak</li>
+                        </ul>
+                        <p class="mt-4 text-xs text-aac-blue font-mono border-t border-aac-blue/20 pt-2">Partenariats</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="py-24 bg-gradient-to-t from-black to-aac-dark border-t border-gray-900">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-4xl font-aac text-center mb-16">CONTACT & <span class="text-aac-yellow">CANDIDATURE</span></h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+
+                <!-- GAUCHE : INFOS & RÉSEAUX -->
+                <div class="md:col-span-1 space-y-10">
+                    <div>
+                        <h3 class="text-aac-yellow font-display text-xl mb-6 flex items-center">
+                            <span class="w-2 h-2 bg-aac-yellow mr-3 rounded-full"></span>
+                            NOUS CONTACTER
+                        </h3>
+                        <div class="space-y-4">
+                            <a href="mailto:atallcostai@gmail.com" class="flex items-center group p-4 bg-white/5 rounded-lg border border-white/5 hover:border-aac-yellow/50 transition-all">
+                                <div class="w-10 h-10 rounded bg-black flex items-center justify-center mr-4 text-gray-400 group-hover:text-aac-yellow transition-colors">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <span class="text-gray-300 group-hover:text-white transition-colors text-sm">atallcostai@gmail.com</span>
+                            </a>
+                            <div class="flex items-center group p-4 bg-white/5 rounded-lg border border-white/5">
+                                <div class="w-10 h-10 rounded bg-black flex items-center justify-center mr-4 text-gray-400">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <span class="text-gray-300 text-sm">Campus - Paris</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-aac-yellow font-display text-xl mb-6 flex items-center">
+                            <span class="w-2 h-2 bg-aac-yellow mr-3 rounded-full"></span>
+                            RÉSEAUX SOCIAUX
+                        </h3>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center hover:bg-aac-yellow hover:text-black hover:-translate-y-1 transition-all">
+                                <i class="fab fa-instagram text-xl"></i>
+                            </a>
+                            <a href="#" class="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center hover:bg-blue-600 hover:text-white hover:-translate-y-1 transition-all">
+                                <i class="fab fa-linkedin-in text-xl"></i>
+                            </a>
+                            <a href="#" class="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center hover:bg-indigo-500 hover:text-white hover:-translate-y-1 transition-all">
+                                <i class="fab fa-discord text-xl"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- SECTION ORGANIGRAMME -->
-        <section id="team">
-            <div style="text-align: center;">
-                <h2>L'ORGANISATION</h2>
-                <p>La structure qui pilote notre vision.</p>
-            </div>
+                <!-- DROITE : FORMULAIRE -->
+                <div class="md:col-span-2">
+                    <form id="contact-form" class="space-y-6 bg-white/5 p-8 rounded-2xl border border-white/5 relative overflow-hidden group">
+                        <!-- Decorative glow -->
+                        <div class="absolute -top-10 -right-10 w-40 h-40 bg-aac-yellow/10 rounded-full blur-3xl group-hover:bg-aac-yellow/20 transition-all duration-500"></div>
 
-            <div class="org-chart">
-                <!-- Niveau 1 : Président -->
-                <div class="org-level">
-                    <div class="member-card" style="border-color: var(--primary-yellow); transform: scale(1.1);">
-                        <span class="role-badge">PRÉSIDENT</span>
-                        <div class="member-name">Asma Kajeiou</div>
-                        <div style="font-size: 0.8rem; color: #888;">Stratégie & Vision</div>
-                    </div>
-                    <div class="member-card" style="border-color: var(--primary-yellow); transform: scale(1.1);">
-                        <span class="role-badge">TRÉSORIER</span>
-                        <div class="member-name">Lucas Gournier</div>
-                        <div style="font-size: 0.8rem; color: #888;">Finances</div>
-                    </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 relative z-10">
+                            <div>
+                                <label class="block text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Nom complet</label>
+                                <input type="text" name="user_name" required class="w-full bg-black/40 border border-gray-700 text-white p-4 rounded focus:border-aac-yellow focus:ring-1 focus:ring-aac-yellow outline-none transition-all placeholder-gray-600" placeholder="John Doe">
+                            </div>
+                            <div>
+                                <label class="block text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Email</label>
+                                <input type="email" name="user_email" required class="w-full bg-black/40 border border-gray-700 text-white p-4 rounded focus:border-aac-yellow focus:ring-1 focus:ring-aac-yellow outline-none transition-all placeholder-gray-600" placeholder="john@example.com">
+                            </div>
+                        </div>
 
-                </div>
+                        <div class="relative z-10">
+                            <label class="block text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Pôle souhaité</label>
+                            <div class="relative">
+                                <select name="role" class="w-full bg-black/40 border border-gray-700 text-white p-4 rounded focus:border-aac-yellow focus:ring-1 focus:ring-aac-yellow outline-none transition-all appearance-none cursor-pointer">
+                                    <option value="membre">Membre Actif</option>
+                                    <option value="tech">Pôle Tech / Dev</option>
+                                    <option value="com">Communication & Design</option>
+                                    <option value="event">Événementiel</option>
+                                    <option value="partenariat">Relations Entreprise</option>
+                                </select>
+                                <i class="fas fa-chevron-down absolute right-4 top-4 text-gray-500 pointer-events-none"></i>
+                            </div>
+                        </div>
 
-                <!-- Niveau 2 : Bureau -->
-                <div class="org-level">
-                    <div class="member-card">
-                        <span class="role-badge">SECRÉTAIRE</span>
-                        <div class="member-name">Dhaker Meddeb</div>
-                        <div style="font-size: 0.8rem; color: #888;">Opérations</div>
-                    </div>                    
-                    <div class="member-card">
-                        <span class="role-badge">SECRÉTAIRE</span>
-                        <div class="member-name">Sanem S</div>
-                        <div style="font-size: 0.8rem; color: #888;">Opérations</div>
-                    </div>
-                </div>
+                        <div class="relative z-10">
+                            <label class="block text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Message</label>
+                            <textarea name="message" rows="4" required class="w-full bg-black/40 border border-gray-700 text-white p-4 rounded focus:border-aac-yellow focus:ring-1 focus:ring-aac-yellow outline-none transition-all placeholder-gray-600" placeholder="Dis-nous pourquoi tu veux rejoindre l'aventure..."></textarea>
+                        </div>
 
-                <!-- Niveau 3 : Pôles -->
-                <div class="org-level">
-                    <div class="member-card" style="border-left: 2px solid #00A8E8;">
-                        <span class="role-badge" style="background: #00A8E8;">PÔLE RESSOURCES HUMAINES</span>
-                        <div class="member-name">Myriam Bensaid</div>
-                        <div class="member-name">Amira Habes</div>
-                        <div style="font-size: 0.8rem; color: #888;">Recrutement & Suivi</div>
-                    </div>
-                    <div class="member-card" style="border-left: 2px solid #00A8E8;">
-                        <span class="role-badge" style="background: #00A8E8;">PÔLE COMMUNICATION & DESIGN</span>
-                        <div class="member-name">Samia Barhili</div>
-                        <div class="member-name">Imran El Azri</div>
-                        <div class="member-name">Malak Abdou</div>
-                        <div class="member-name">Kaxter Daoudi</div>
-                        <div class="member-name">Alaa Ouazbir</div>
-                        <div style="font-size: 0.8rem; color: #888;">Réseaux & Image</div>
-                    </div>
-                    <div class="member-card" style="border-left: 2px solid #00A8E8;">
-                        <span class="role-badge" style="background: #00A8E8;">PÔLE ÉVÉNEMENTIEL</span>
-                        <div class="member-name">Yasmina Hida</div>
-                        <div class="member-name">Bouchra Zamoum</div>
-                        <div class="member-name">Hajar Achour</div>
-                        <div style="font-size: 0.8rem; color: #888;">Hackathons & Meetups</div>
-                    </div>
-                    <div class="member-card" style="border-left: 2px solid #00A8E8;">
-                        <span class="role-badge" style="background: #00A8E8;">PÔLE RELATIONS ENTREPRISE</span>
-                        <div class="member-name">Tiziri Bouchichene</div>
-                        <div class="member-name">Yaasmine Mardak</div>
-                        <div style="font-size: 0.8rem; color: #888;">Relations Entreprise</div>
-                    </div>
+                        <button type="submit" id="submit-btn" class="w-full bg-gradient-to-r from-aac-yellow to-yellow-500 text-black font-aac font-bold py-4 rounded hover:from-white hover:to-gray-200 hover:scale-[1.01] transition-all uppercase tracking-widest text-lg shadow-[0_0_20px_rgba(255,192,0,0.3)] relative z-10">
+                            ENVOYER LA CANDIDATURE
+                        </button>
+                    </form>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- SECTION REJOINDRE -->
-        <section id="join">
-            <div style="text-align: center; margin-bottom: 3rem;">
-                <h2>REJOINDRE L'UNITÉ</h2>
-                <p>Prêt à construire le futur ? Remplissez le formulaire ci-dessous.</p>
+    <!-- FOOTER -->
+    <footer class="bg-black py-10 border-t border-gray-900">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+            <div class="mb-4 md:mb-0 flex items-center">
+                <img src="logo/vrai_logo_aac.png" alt="AAC" class="h-8 opacity-50 grayscale hover:grayscale-0 transition-all mr-3">
+                <span class="text-gray-700 font-aac text-xs tracking-widest">AT ALL COST</span>
             </div>
-
-            <div class="form-container">
-                <form id="inscriptionForm" onsubmit="handleFormSubmit(event)">
-                    <div class="form-group">
-                        <label for="nom">Nom Complet</label>
-                        <input type="text" id="nom" name="from_name" class="form-control" required placeholder="John Doe">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email Étudiant</label>
-                        <input type="email" id="email" name="from_email" class="form-control" required placeholder="john.doe@ecole.fr">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="role">Pôle d'intérêt</label>
-                        <select id="role" name="interest" class="form-control">
-                            <option value="rh">Pôle Ressources Humaines</option>
-                            <option value="com">Pôle Communication & Design</option>
-                            <option value="event">Pôle Événementiel</option>
-                            <option value="partenariats">Pôle Relations Entreprise</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="motivation">Pourquoi nous rejoindre ?</label>
-                        <textarea id="motivation" name="message" class="form-control" rows="4" placeholder="Vos motivations, compétences..."></textarea>
-                    </div>
-
-                    <button type="submit" class="btn-primary" style="width: 100%; cursor: pointer;">ENVOYER LA CANDIDATURE</button>
-                </form>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <div class="logo-text" style="font-size: 1.2rem; margin-bottom: 1rem;">AT ALL <span>COST</span></div>
-            <p>&copy; 2026 Association At All Cost. Tous droits réservés.</p>
-            <div class="social-links">
-                <a href="https://discord.com/invite/eu2X2DqUyR"><i class="fab fa-discord"></i></a>
-                <a href="https://www.linkedin.com/company/atallcost/posts/?feedView=all"><i class="fab fa-linkedin"></i></a>
-                <a href="https://github.com/atallcost"><i class="fab fa-github"></i></a>
-                <a href="https://www.instagram.com/atallcost.ai/"><i class="fab fa-instagram"></i></a>
+            <div class="text-gray-600 text-xs font-tech tracking-wider">
+                &copy; 2024 At All Cost. Designed by AI Lab.
             </div>
         </div>
     </footer>
