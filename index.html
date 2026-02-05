@@ -95,10 +95,10 @@
 <body class="bg-aac-dark text-white font-tech overflow-x-hidden selection:bg-aac-yellow selection:text-black">
 
     <!-- NAVIGATION -->
-    <nav class="fixed w-full z-50 bg-aac-dark/95 border-b border-white/10">
+    <nav class="fixed w-full z-50 bg-aac-dark/95 border-b border-white/10 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
-                <div class="flex-shrink-0 cursor-pointer" onclick="window.scrollTo(0,0)">
+                <div class="flex-shrink-0 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
                     <img class="h-10 w-auto" src="img/AAC-logo-1.svg" alt="AAC Logo">
                 </div>
                 <div class="hidden md:block">
@@ -116,9 +116,18 @@
                 </div>
             </div>
         </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-aac-dark border-t border-gray-800">
+            <div class="px-2 pt-2 pb-3 space-y-1 text-center">
+                <a href="#home" class="block px-3 py-2 font-display hover:text-aac-yellow">ACCUEIL</a>
+                <a href="#about" class="block px-3 py-2 font-display hover:text-aac-yellow">VISION</a>
+                <a href="#team" class="block px-3 py-2 font-display hover:text-aac-yellow">ÉQUIPE</a>
+                <a href="#contact" class="block px-3 py-2 font-display text-aac-yellow">REJOINDRE</a>
+            </div>
+        </div>
     </nav>
 
-    <!-- HERO SECTION (STYLE BASE RÉTABLI) -->
+    <!-- HERO SECTION -->
     <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0">
             <img src="img_vdo/brain_neural_network2.png" alt="Neural Network" class="w-full h-full object-cover opacity-40">
@@ -126,7 +135,6 @@
         </div>
 
         <div class="relative z-10 text-center px-4 max-w-7xl mx-auto">
-            <!-- TITRE ET POLICE DE BASE -->
             <h1 class="text-5xl md:text-8xl font-aac mb-6 text-white tracking-wider">
                 AT ALL <span class="text-aac-yellow">COST</span>
             </h1>
@@ -136,7 +144,7 @@
             </h2>
 
             <div class="flex flex-col sm:flex-row gap-6 justify-center">
-                <a href="#contact" class="px-8 py-4 bg-aac-yellow text-black font-display font-bold hover:bg-white transition-all rounded">
+                <a href="#contact" class="px-8 py-4 bg-aac-yellow text-black font-display font-bold hover:bg-white transition-all rounded shadow-[0_0_15px_rgba(255,192,0,0.3)]">
                     NOUS REJOINDRE
                 </a>
                 <a href="#about" class="px-8 py-4 border border-white/20 text-white font-display hover:bg-white/10 transition-all rounded">
@@ -159,20 +167,20 @@
                     At All Cost est un incubateur de talents. Nous brisons les barrières académiques pour offrir une expérience pratique et concrète de l'IA.
                 </p>
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="p-4 bg-white/5 border border-white/5 rounded text-center">
-                        <i class="fas fa-brain text-aac-yellow mb-2 text-2xl"></i>
-                        <p class="font-bold">Deep Learning</p>
+                    <div class="p-6 bg-white/5 border border-white/5 rounded text-center hover:border-aac-yellow transition-colors">
+                        <i class="fas fa-brain text-aac-yellow mb-2 text-3xl"></i>
+                        <p class="font-bold font-display uppercase text-sm mt-2">Deep Learning</p>
                     </div>
-                    <div class="p-4 bg-white/5 border border-white/5 rounded text-center">
-                        <i class="fas fa-microchip text-aac-blue mb-2 text-2xl"></i>
-                        <p class="font-bold">Innovation</p>
+                    <div class="p-6 bg-white/5 border border-white/5 rounded text-center hover:border-aac-blue transition-colors">
+                        <i class="fas fa-microchip text-aac-blue mb-2 text-3xl"></i>
+                        <p class="font-bold font-display uppercase text-sm mt-2">Innovation</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ÉQUIPE / ORGANIGRAMME (VOTRE VERSION) -->
+    <!-- ÉQUIPE / ORGANIGRAMME -->
     <section id="team" class="py-24 bg-aac-dark relative border-t border-white/5">
         <div class="max-w-7xl mx-auto px-4">
             <h2 class="text-4xl font-aac text-center mb-20 uppercase tracking-widest">L'Organigramme</h2>
@@ -180,12 +188,12 @@
             <div class="org-chart">
                 <!-- Niveau 1 : Président & Trésorier -->
                 <div class="org-level">
-                    <div class="member-card" style="border-color: #FFC000; transform: scale(1.1);">
+                    <div class="member-card" style="border-color: #FFC000; transform: scale(1.05);">
                         <span class="role-badge" style="background: #FFC000; color: black;">PRÉSIDENT</span>
                         <div class="member-name">Asma Kajeiou</div>
                         <div style="font-size: 0.8rem; color: #888;">Stratégie & Vision</div>
                     </div>
-                    <div class="member-card" style="border-color: #FFC000; transform: scale(1.1);">
+                    <div class="member-card" style="border-color: #FFC000; transform: scale(1.05);">
                         <span class="role-badge" style="background: #FFC000; color: black;">TRÉSORIER</span>
                         <div class="member-name">Lucas Gournier</div>
                         <div style="font-size: 0.8rem; color: #888;">Finances</div>
@@ -248,7 +256,7 @@
     <!-- CONTACT SECTION -->
     <section id="contact" class="py-24 bg-gradient-to-t from-black to-aac-dark border-t border-white/10">
         <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-4xl font-aac text-center mb-16 uppercase tracking-widest">Contact</h2>
+            <h2 class="text-4xl font-aac text-center mb-16 uppercase tracking-widest text-white">Contact</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                 <!-- INFOS CONTACT -->
@@ -258,13 +266,13 @@
                         <div class="space-y-4">
                             <div class="flex items-center group">
                                 <div class="w-10 h-10 rounded bg-white/5 flex items-center justify-center mr-4 border border-white/10 group-hover:bg-aac-yellow group-hover:text-black transition-all">
-                                    <i class="fas fa-envelope"></i>
+                                    <i class="fas fa-envelope text-lg"></i>
                                 </div>
                                 <a href="mailto:atallcostai@gmail.com" class="text-gray-300 hover:text-white transition-colors">atallcostai@gmail.com</a>
                             </div>
                             <div class="flex items-center">
                                 <div class="w-10 h-10 rounded bg-white/5 flex items-center justify-center mr-4 border border-white/10">
-                                    <i class="fas fa-map-marker-alt"></i>
+                                    <i class="fas fa-map-marker-alt text-lg"></i>
                                 </div>
                                 <span class="text-gray-300">Paris - France</span>
                             </div>
@@ -272,16 +280,16 @@
                     </div>
 
                     <div>
-                        <h3 class="text-aac-yellow font-display text-xl mb-6">RÉSEAUX</h3>
+                        <h3 class="text-aac-yellow font-display text-xl mb-6 uppercase">Réseaux</h3>
                         <div class="flex space-x-4">
-                            <a href="https://www.instagram.com/atallcost.ai" class="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center hover:bg-aac-yellow hover:text-black hover:-translate-y-1 transition-all">
-                                <i class="fab fa-instagram text-xl"></i>
+                            <a href="https://www.instagram.com/atallcost.ai" class="w-12 h-12 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center hover:bg-aac-yellow hover:text-black hover:-translate-y-1 transition-all">
+                                <i class="fab fa-instagram text-2xl"></i>
                             </a>
-                            <a href="https://www.linkedin.com/company/atallcost/posts/?feedView=all" class="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center hover:bg-blue-600 hover:text-white hover:-translate-y-1 transition-all">
-                                <i class="fab fa-linkedin-in text-xl"></i>
+                            <a href="https://www.linkedin.com/company/atallcost/" class="w-12 h-12 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center hover:bg-blue-600 hover:text-white hover:-translate-y-1 transition-all">
+                                <i class="fab fa-linkedin-in text-2xl"></i>
                             </a>
-                            <a href="https://discord.com/invite/eu2X2DqUyR" class="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center hover:bg-indigo-500 hover:text-white hover:-translate-y-1 transition-all">
-                                <i class="fab fa-discord text-xl"></i>
+                            <a href="https://discord.com/invite/eu2X2DqUyR" class="w-12 h-12 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center hover:bg-indigo-500 hover:text-white hover:-translate-y-1 transition-all">
+                                <i class="fab fa-discord text-2xl"></i>
                             </a>
                         </div>
                     </div>
@@ -289,31 +297,31 @@
 
                 <!-- FORMULAIRE -->
                 <div class="md:col-span-2">
-                    <form id="contact-form" class="space-y-6 bg-white/5 p-8 rounded border border-white/5">
+                    <form id="contact-form" class="space-y-6 bg-white/5 p-8 rounded-xl border border-white/5 shadow-2xl">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div>
-                                <label class="block text-gray-400 text-xs uppercase mb-2">Nom</label>
-                                <input type="text" name="user_name" required class="w-full bg-black/50 border border-gray-700 text-white p-3 rounded focus:border-aac-yellow outline-none transition-all">
+                                <label class="block text-gray-400 text-xs uppercase mb-2 font-bold tracking-widest">Nom</label>
+                                <input type="text" name="user_name" id="user_name" required class="w-full bg-black/40 border border-gray-700 text-white p-4 rounded focus:border-aac-yellow outline-none transition-all">
                             </div>
                             <div>
-                                <label class="block text-gray-400 text-xs uppercase mb-2">Email</label>
-                                <input type="email" name="user_email" required class="w-full bg-black/50 border border-gray-700 text-white p-3 rounded focus:border-aac-yellow outline-none transition-all">
+                                <label class="block text-gray-400 text-xs uppercase mb-2 font-bold tracking-widest">Email</label>
+                                <input type="email" name="user_email" id="user_email" required class="w-full bg-black/40 border border-gray-700 text-white p-4 rounded focus:border-aac-yellow outline-none transition-all">
                             </div>
                         </div>
                         <div>
-                            <label class="block text-gray-400 text-xs uppercase mb-2">Pôle</label>
-                            <select name="role" class="w-full bg-black/50 border border-gray-700 text-white p-3 rounded focus:border-aac-yellow outline-none transition-all cursor-pointer">
+                            <label class="block text-gray-400 text-xs uppercase mb-2 font-bold tracking-widest">Pôle souhaité</label>
+                            <select name="role" id="role" class="w-full bg-black/40 border border-gray-700 text-white p-4 rounded focus:border-aac-yellow outline-none transition-all cursor-pointer">
                                 <option value="membre">Membre Actif</option>
-                                <option value="tech">Technique</option>
-                                <option value="com">Com & Design</option>
+                                <option value="tech">Technique / Dev</option>
+                                <option value="com">Communication & Design</option>
                                 <option value="event">Événementiel</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block text-gray-400 text-xs uppercase mb-2">Message</label>
-                            <textarea name="message" rows="4" required class="w-full bg-black/50 border border-gray-700 text-white p-3 rounded focus:border-aac-yellow outline-none transition-all"></textarea>
+                            <label class="block text-gray-400 text-xs uppercase mb-2 font-bold tracking-widest">Motivation</label>
+                            <textarea name="message" id="message" rows="4" required class="w-full bg-black/40 border border-gray-700 text-white p-4 rounded focus:border-aac-yellow outline-none transition-all placeholder-gray-600" placeholder="Pourquoi souhaitez-vous nous rejoindre ?"></textarea>
                         </div>
-                        <button type="submit" id="submit-btn" class="w-full bg-aac-yellow text-black font-display font-bold py-4 rounded hover:bg-white transition-all uppercase tracking-widest">
+                        <button type="submit" id="submit-btn" class="w-full bg-aac-yellow text-black font-display font-bold py-4 rounded hover:bg-white transition-all uppercase tracking-widest text-lg shadow-lg">
                             Envoyer la candidature
                         </button>
                     </form>
@@ -326,11 +334,11 @@
     <footer class="bg-black py-10 border-t border-gray-900">
         <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
             <div class="flex items-center">
-                <img src="img/AAC-logo-1.svg" alt="AAC" class="h-6 opacity-40 mr-4">
-                <span class="text-gray-700 font-aac text-xs tracking-widest uppercase">At All Cost</span>
+                <img src="logo/vrai_logo_aac.png" alt="AAC" class="h-6 opacity-40 mr-4">
+                <span class="text-gray-700 font-aac text-xs tracking-widest uppercase">At All Cost Lab</span>
             </div>
             <div class="text-gray-700 text-xs font-tech tracking-wider mt-4 md:mt-0">
-                &copy; 2026 At All Cost AI Lab. All rights reserved.
+                &copy; 2026 At All Cost. All rights reserved.
             </div>
         </div>
     </footer>
