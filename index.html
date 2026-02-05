@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts pour les textes secondaires -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
-    <!-- SDK EmailJS -->
+    <!-- SDK EmailJS (Nécessaire pour l'envoi d'emails) -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
     <style>
@@ -494,36 +494,128 @@
     </footer>
 
     <script>
-        const EMAILJS_PUBLIC_KEY = "RSnQP5_BBUJX2wfBM";
-        const EMAILJS_SERVICE_ID = "service_liem09u";
-        const EMAILJS_TEMPLATE_ID = "template_n05x1y8";
+        // --- CONFIGURATION EMAILJS ---
+        // Remplace les valeurs ci-dessous par les tiennes depuis ton compte EmailJS
+        const EMAILJS_PUBLIC_KEY = "RSnQP5_BBUJX2wfBM"; // ex: "user_xxxxxxxxxx"
+        const EMAILJS_SERVICE_ID = "service_liem09u"; // ex: "service_gmail"
+        const EMAILJS_TEMPLATE_ID = "template_n05x1y8"; // ex: "template_contact"
 
+        // Initialisation d'EmailJS au chargement
         (function() {
             emailjs.init(EMAILJS_PUBLIC_KEY);
         })();
 
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
+        // Fonction pour afficher une section spécifique
+        function showSection(sectionId) {
+            // 1. Cacher toutes les sections
+            const sections = document.querySelectorAll('section');
+            sections.forEach(sec => {
+                sec.classList.remove('active-section');
+                sec.style.display = 'none'; // Force le masquage
+            });
+
+            // 2. Afficher la section cible
+            const target = document.getElementById(sectionId);
+            if (target) {
+                target.style.display = 'block'; // Force l'affichage
+                // Petit délai pour l'animation
+                setTimeout(() => {
+                    target.classList.add('active-section');
+                }, 10);
+            }
+
+            // 3. Mettre à jour le menu actif
+            const links = document.querySelectorAll('.nav-link');
+            links.forEach(link => link.classList.remove('active'));
+
+            // Trouver le lien qui correspond à la section et l'activer
+            // (Logique simple basée sur l'onclick)
+            links.forEach(link => {
+                if(link.getAttribute('onclick').includes(sectionId)) {
+                    link.classList.add('active');
+                }
+            });
+
+            // 4. Fermer le menu mobile si ouvert
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.remove('active');
+
+            // Remonter en haut de page
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // Toggle pour le menu mobile
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // --- GESTION DU FORMULAIRE ---
+        function handleFormSubmit(e) {
             e.preventDefault();
-            const btn = document.getElementById('submit-btn');
-            btn.innerText = "Envoi...";
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerText;
+            const form = e.target;
+
+            // Récupération des données (utile pour le fallback)
+            const nom = document.getElementById('nom').value;
+            const email = document.getElementById('email').value;
+            const role = document.getElementById('role').value;
+            const motivation = document.getElementById('motivation').value;
+
+            btn.innerText = "ENVOI EN COURS...";
+            btn.style.opacity = "0.7";
             btn.disabled = true;
 
-            emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, this)
-                .then(() => {
-                    btn.innerText = "Candidature Envoyée !";
-                    btn.style.background = "#4CAF50";
-                    this.reset();
+            // Tentative d'envoi via EmailJS
+            emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
+                .then(function() {
+                    // SUCCÈS
+                    console.log('SUCCESS!');
+                    btn.innerText = "CANDIDATURE ENVOYÉE !";
+                    btn.style.backgroundColor = "#4CAF50"; // Vert
+                    btn.style.borderColor = "#4CAF50";
+                    form.reset();
+
                     setTimeout(() => {
-                        btn.innerText = "Envoyer";
-                        btn.style.background = "";
+                        btn.innerText = originalText;
+                        btn.style.backgroundColor = "";
+                        btn.style.borderColor = "";
+                        btn.style.opacity = "1";
                         btn.disabled = false;
-                    }, 4000);
+                    }, 3000);
                 })
-                .catch((err) => {
-                    console.error(err);
-                    btn.innerText = "Erreur d'envoi";
-                    btn.disabled = false;
+                .catch(function(error) {
+                    // ÉCHEC -> BASCULE VERS LE MODE SECOURS (MAILTO)
+                    console.error('FAILED...', error);
+                    console.log("Passage au mode secours (mailto)");
+
+                    btn.innerText = "Redirection vers votre boîte mail...";
+                    btn.style.backgroundColor = "#E65100"; // Orange pour prévenir
+
+                    setTimeout(() => {
+                        const subject = `Candidature At All Cost - ${nom}`;
+                        const body = `Nom: ${nom}%0D%0AEmail: ${email}%0D%0APôle souhaité: ${role}%0D%0AMotivation:%0D%0A${motivation}`;
+
+                        // Ouvre le client mail par défaut avec la bonne adresse
+                        window.location.href = `mailto:atallcostai@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+
+                        // Reset UI
+                        setTimeout(() => {
+                            btn.innerText = originalText;
+                            btn.style.backgroundColor = "";
+                            btn.style.opacity = "1";
+                            btn.disabled = false;
+                            form.reset();
+                        }, 2000);
+                    }, 1500);
                 });
+        }
+
+        // Initialisation au chargement
+        document.addEventListener('DOMContentLoaded', () => {
+            // S'assurer que la section Hero est visible au départ
+            showSection('hero');
         });
     </script>
 </body>
