@@ -5,28 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>At All Cost - AI Lab</title>
 
-    <!-- FontAwesome pour les icônes -->
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts pour les textes secondaires -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
-    <!-- SDK EmailJS (Nécessaire pour l'envoi d'emails) -->
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- SDK EmailJS -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <!-- Favicon -->
     <link rel="shortcut icon" href="img/AAC_logo.png" type="image/x-icon">
 
-
     <style>
-        /* --- VARIABLES --- */
+        /* --- VARIABLES & CONFIG --- */
         :root {
             --primary-yellow: #FFC000;
             --secondary-blue: #00A8E8;
             --bg-dark: #050505;
-            --bg-gray: #111111;
+            --glass-bg: rgba(20, 20, 20, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
             --text-white: #ffffff;
-            --text-gray: #aaaaaa;
+            --text-gray: #b0b0b0;
         }
 
-        /* --- POLICES --- */
         @font-face {
             font-family: 'Android101';
             src: url('font/android101.ttf') format('truetype');
@@ -34,15 +33,8 @@
         }
 
         /* --- RESET --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
             background-color: var(--bg-dark);
@@ -52,69 +44,80 @@
             overflow-x: hidden;
         }
 
+        /* --- ANIMATIONS --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* --- NAVIGATION --- */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
             height: 80px;
-            background: rgba(5, 5, 5, 0.9);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 5%;
             z-index: 1000;
-            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
         }
 
-        .logo img {
-            height: 45px;
-            cursor: pointer;
-        }
+        .logo img { height: 40px; cursor: pointer; transition: transform 0.3s; }
+        .logo img:hover { transform: scale(1.05); }
 
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
-
+        .nav-links { display: flex; gap: 40px; align-items: center; }
         .nav-links a {
             color: var(--text-white);
             text-decoration: none;
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             letter-spacing: 2px;
             text-transform: uppercase;
+            font-weight: 500;
+            position: relative;
             transition: color 0.3s;
         }
 
-        .nav-links a:hover {
-            color: var(--primary-yellow);
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary-yellow);
+            transition: width 0.3s;
         }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: var(--primary-yellow); }
 
         .btn-join {
+            background: transparent;
+            color: var(--primary-yellow) !important;
+            padding: 8px 24px;
+            border: 1px solid var(--primary-yellow);
+            border-radius: 2px;
+            font-weight: 700 !important;
+            transition: all 0.3s ease;
+        }
+        .btn-join:hover {
             background: var(--primary-yellow);
             color: black !important;
-            padding: 10px 20px;
-            border-radius: 4px;
-            font-weight: bold;
+            box-shadow: 0 0 15px rgba(255, 192, 0, 0.4);
         }
+        .btn-join::after { display: none; }
 
-        .btn-join:hover {
-            background: white;
-        }
-
-        .jp-text {
-            font-family: 'Open Sans', sans-serif;
-            color: var(--primary-yellow);
-            letter-spacing: 5px;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-
-        /* --- HERO SECTION AVEC VIDÉO --- */
+        /* --- HERO SECTION --- */
         .hero {
             position: relative;
             height: 100vh;
@@ -129,12 +132,9 @@
 
         .hero-video {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
+            top: 50%; left: 50%;
+            min-width: 100%; min-height: 100%;
+            width: auto; height: auto;
             z-index: -2;
             transform: translate(-50%, -50%);
             object-fit: cover;
@@ -142,418 +142,599 @@
 
         .hero-overlay {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(5, 5, 5, 0.4), var(--bg-dark));
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(180deg, rgba(5,5,5,0.7) 0%, rgba(5,5,5,0.4) 50%, var(--bg-dark) 100%);
             z-index: -1;
         }
 
+        .hero-content { z-index: 1; margin-top: 60px; }
+
         .hero h1 {
             font-family: 'Android101', sans-serif;
-            font-size: 5rem;
-            margin-bottom: 10px;
-            letter-spacing: 5px;
-            text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+            font-size: clamp(3rem, 8vw, 6rem);
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+            line-height: 1.1;
+            text-shadow: 0 0 30px rgba(0,0,0,0.8);
         }
-
-        .hero h1 span {
-            color: var(--primary-yellow);
-        }
+        .hero h1 span { color: var(--primary-yellow); }
 
         .hero h2 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            color: var(--text-gray);
-            letter-spacing: 4px;
+            font-size: clamp(0.9rem, 2vw, 1.5rem);
+            color: rgba(255, 255, 255, 0.9);
+            letter-spacing: 0.3em;
             text-transform: uppercase;
-            border-top: 1px solid rgba(255, 192, 0, 0.3);
-            border-bottom: 1px solid rgba(255, 192, 0, 0.3);
-            padding: 10px 20px;
+            position: relative;
             display: inline-block;
-            background: rgba(5, 5, 5, 0.5);
+            padding: 0 20px;
+            margin-bottom: 3rem;
         }
 
-        /* --- SECTIONS COMMUNES --- */
-        section {
-            padding: 100px 10%;
+        .hero h2::before, .hero h2::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40px;
+            height: 1px;
+            background: var(--primary-yellow);
+            opacity: 0.6;
         }
+        .hero h2::before { left: -40px; }
+        .hero h2::after { right: -40px; }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            animation: bounce 2s infinite;
+            opacity: 0.7;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        /* --- SECTIONS --- */
+        section { padding: 120px 10%; }
+
+        .section-header { text-align: center; margin-bottom: 80px; }
 
         .section-title {
             font-family: 'Android101', sans-serif;
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 50px;
+            font-size: 3rem;
             text-transform: uppercase;
+            position: relative;
+            display: inline-block;
         }
+        .section-title span { color: var(--primary-yellow); }
 
-        .section-title span {
-            color: var(--primary-yellow);
+        .section-subtitle {
+            display: block;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: var(--secondary-blue);
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
         }
 
         /* --- VISION --- */
         .vision-container {
-            display: flex;
-            gap: 50px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
             align-items: center;
-            flex-wrap: wrap;
         }
 
-        .vision-img {
-            flex: 1;
-            min-width: 300px;
+        .vision-img-wrapper {
+            position: relative;
+        }
+        .vision-img-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -15px; left: -15px;
+            width: 100%; height: 100%;
+            border: 2px solid var(--primary-yellow);
+            opacity: 0.3;
+            z-index: 0;
+            border-radius: 12px;
         }
 
         .vision-img img {
             width: 100%;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 1;
+            filter: grayscale(20%);
+            transition: filter 0.3s;
         }
-
-        .vision-text {
-            flex: 1;
-            min-width: 300px;
-        }
+        .vision-img img:hover { filter: grayscale(0%); }
 
         .vision-text p {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             color: var(--text-gray);
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            font-weight: 300;
         }
 
-        /* --- ORGANIGRAMME --- */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+        .stat-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-card h4 { font-family: 'Orbitron'; color: var(--text-white); font-size: 1.2rem; }
+        .stat-card span { font-size: 0.8rem; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- ORGANIGRAMME PRO --- */
         .org-chart {
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative;
         }
 
+        /* Lignes connecteurs */
         .org-level {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin-bottom: 40px;
+            gap: 40px;
+            margin-bottom: 60px;
             flex-wrap: wrap;
+            position: relative;
             width: 100%;
         }
 
+        /* Ligne verticale entre niveaux (pseudo-element sur org-level sauf le dernier) */
+        .org-level:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            width: 2px;
+            height: 60px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            z-index: -1;
+        }
+
         .member-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 25px;
-            border-radius: 8px;
+            background: rgba(30, 30, 30, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 30px 20px;
+            border-radius: 12px;
             text-align: center;
-            min-width: 200px;
-            transition: 0.3s;
+            min-width: 240px;
+            max-width: 280px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+        }
+
+        .member-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.7);
+            background: rgba(40, 40, 40, 0.6);
         }
 
         .role-badge {
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.7rem;
-            font-weight: bold;
-            padding: 4px 10px;
-            border-radius: 4px;
-            background: #444;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: #222;
+            color: #fff;
             display: inline-block;
             margin-bottom: 15px;
+            letter-spacing: 1px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .member-name {
-            font-weight: bold;
-            font-size: 1.2rem;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
             margin-bottom: 5px;
+            color: var(--text-white);
         }
+
+        .member-sub {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            font-weight: 300;
+        }
+
+        /* Styles spécifiques cartes */
+        .card-pres { border-top: 3px solid var(--primary-yellow); }
+        .card-pres .role-badge { background: rgba(255, 192, 0, 0.1); color: var(--primary-yellow); border-color: var(--primary-yellow); }
+
+        .card-pole { border-top: 3px solid var(--secondary-blue); }
+        .card-pole .role-badge { background: rgba(0, 168, 232, 0.1); color: var(--secondary-blue); border-color: var(--secondary-blue); }
 
         /* --- CONTACT --- */
         .contact-container {
             display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 50px;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 80px;
+            background: rgba(255,255,255,0.02);
+            padding: 60px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
         }
 
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
+        .contact-info { display: flex; flex-direction: column; justify-content: center; }
+        .contact-info h3 { font-family: 'Android101'; font-size: 1.8rem; margin-bottom: 30px; }
 
-        .info-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .info-item i {
+        .info-item { display: flex; align-items: center; gap: 20px; margin-bottom: 25px; }
+        .icon-box {
+            width: 50px; height: 50px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
             color: var(--primary-yellow);
-            font-size: 1.5rem;
+            font-size: 1.2rem;
         }
 
-        .social-links {
-            display: flex;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .social-links a {
-            color: var(--text-white);
-            font-size: 1.8rem;
-            transition: 0.3s;
-            text-decoration: none;
-        }
-
-        .social-links a:hover {
-            color: var(--primary-yellow);
-            transform: translateY(-5px);
-        }
-
-        form {
-            background: var(--bg-gray);
-            padding: 40px;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        input, textarea {
-            background: black;
-            border: 1px solid #333;
+        .social-links { display: flex; gap: 20px; margin-top: 40px; }
+        .social-btn {
+            width: 45px; height: 45px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            display: flex; align-items: center; justify-content: center;
             color: white;
-            padding: 12px;
-            border-radius: 4px;
+            transition: all 0.3s;
+            text-decoration: none;
+            border: 1px solid transparent;
+        }
+        .social-btn:hover {
+            background: var(--primary-yellow);
+            color: black;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255,192,0,0.3);
+        }
+
+        form { display: flex; flex-direction: column; gap: 20px; }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--glass-border);
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
             outline: none;
+            border-color: var(--primary-yellow);
+            background: rgba(0,0,0,0.5);
         }
 
         .submit-btn {
             background: var(--primary-yellow);
             color: black;
             border: none;
-            padding: 15px;
+            padding: 18px;
             font-family: 'Orbitron', sans-serif;
-            font-weight: bold;
+            font-weight: 700;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s;
             text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .submit-btn:hover {
+            background: white;
+            box-shadow: 0 0 20px rgba(255,255,255,0.4);
         }
 
+        /* --- FOOTER --- */
         footer {
-            padding: 40px;
-            text-align: center;
-            border-top: 1px solid #222;
-            color: #444;
-            font-size: 0.8rem;
+            padding: 60px 10%;
+            border-top: 1px solid #1a1a1a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #666;
+            background: #020202;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 992px) {
+            .vision-container, .contact-container { grid-template-columns: 1fr; gap: 50px; }
+            section { padding: 80px 5%; }
+            .org-level { flex-direction: column; align-items: center; gap: 30px; }
+            .org-level::after { display: none; }
         }
 
         @media (max-width: 768px) {
-            .hero h1 { font-size: 3rem; }
-            .nav-links { display: none; }
-            .contact-container { grid-template-columns: 1fr; }
+            .nav-links { display: none; } /* Mobile menu à faire si besoin */
+            .hero h1 { font-size: 3.5rem; }
+            .contact-container { padding: 30px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- NAVIGATION -->
-    <nav>
-        <div class="logo">
-            <img src="img/AAC-logo-1.svg" alt="AAC Logo" onclick="window.scrollTo(0,0)">
-        </div>
-        <div class="nav-links">
-            <a href="#home">Accueil</a>
-            <a href="#about">Vision</a>
-            <a href="#team">Équipe</a>
-            <a href="#contact" class="btn-join">Rejoindre</a>
-        </div>
-    </nav>
+<!-- NAVIGATION -->
+<nav>
+    <div class="logo">
+        <img src="logo/vrai_logo_aac.png" alt="AAC Logo" onclick="window.scrollTo(0,0)">
+    </div>
+    <div class="nav-links">
+        <a href="#home">Accueil</a>
+        <a href="#about">Vision</a>
+        <a href="#team">Équipe</a>
+        <a href="#contact" class="btn-join">Rejoindre</a>
+    </div>
+</nav>
 
-    <!-- HERO SECTION AVEC VIDÉO BACKGROUND -->
-    <section id="home" class="hero">
-        <!-- La vidéo en background -->
-        <video autoplay muted loop playsinline class="hero-video">
-            <source src="img_vdo/brain_video.mp4" type="video/mp4">
-            Votre navigateur ne supporte pas la lecture de vidéos.
-        </video>
-        <!-- Overlay pour assombrir et dégradé -->
-        <div class="hero-overlay"></div>
+<!-- HERO SECTION -->
+<section id="home" class="hero">
+    <video autoplay muted loop playsinline class="hero-video">
+        <source src="img_vdo/brain_video.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
 
-        <p class="jp-text">未来は明るい (L'AVENIR EST BRILLANT)</p>
-        <h1>FORGING THE <br><span class="highlight">INTELLIGENCE</span> OF TOMORROW</h1>
-        <p style="margin: 1.5rem 0; font-size: 1.1rem; color: #ccc;">
-            Bienvenue chez <strong>At All Cost</strong>. L'association étudiante dédiée à l'exploration, la compréhension et le développement de l'Intelligence Artificielle.
-        </p>
-    </section>
+    <div class="hero-content reveal">
+        <h1>AT ALL <span>COST</span></h1>
+        <h2>Intelligence Artificielle & Innovation</h2>
+    </div>
 
-    <!-- VISION SECTION -->
-    <section id="about">
+    <div class="scroll-down">
+        <i class="fas fa-chevron-down" style="color: rgba(255,255,255,0.5);"></i>
+    </div>
+</section>
+
+<!-- VISION SECTION -->
+<section id="about">
+    <div class="section-header reveal">
+        <span class="section-subtitle">Qui sommes-nous ?</span>
         <h2 class="section-title">Notre <span>Vision</span></h2>
-        <div class="vision-container">
+    </div>
+
+    <div class="vision-container reveal">
+        <div class="vision-img-wrapper">
             <div class="vision-img">
-                <img src="img_vdo/brain_neural_network2.png" alt="AI Brain Poster" style="width: 50%;">
-            </div>
-            <div class="vision-text">
-                <p>At All Cost est un incubateur de talents dédié à l'intelligence artificielle. Nous connectons les étudiants passionnés avec les outils et le réseau nécessaires pour construire le futur.</p>
-                <p>Notre mission : Briser les barrières académiques et favoriser l'innovation par la pratique et l'expérimentation concrète.</p>
+                <img src="img_vdo/brain_poster.png" alt="AI Brain Poster">
             </div>
         </div>
-    </section>
+        <div class="vision-text">
+            <p>At All Cost est bien plus qu'une association : c'est un <strong>incubateur de talents</strong> dédié à l'intelligence artificielle. Nous connectons les étudiants passionnés avec les outils industriels et le réseau nécessaire pour construire le futur.</p>
+            <p>Notre mission est claire : <strong>Briser les barrières académiques</strong> et favoriser l'innovation par la pratique radicale et l'expérimentation concrète.</p>
 
-    <!-- EQUIPE SECTION -->
-    <section id="team">
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <i class="fas fa-brain" style="color: var(--primary-yellow); font-size: 2rem; margin-bottom: 10px;"></i>
+                    <h4>Deep Learning</h4>
+                    <span>Formation Avancée</span>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-rocket" style="color: var(--secondary-blue); font-size: 2rem; margin-bottom: 10px;"></i>
+                    <h4>Innovation</h4>
+                    <span>Projets Concrets</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EQUIPE SECTION -->
+<section id="team">
+    <div class="section-header reveal">
+        <span class="section-subtitle">La structure</span>
         <h2 class="section-title">L'<span>Organigramme</span></h2>
+    </div>
 
-        <div class="org-chart">
-            <div class="org-level">
-                <div class="member-card" style="border-color: var(--primary-yellow); transform: scale(1.1);">
-                    <span class="role-badge" style="background: var(--primary-yellow); color: black;">PRÉSIDENT</span>
-                    <div class="member-name">Asma Kajeiou</div>
-                    <div style="font-size: 0.8rem; color: #888;">Stratégie & Vision</div>
-                </div>
-                <div class="member-card" style="border-color: var(--primary-yellow); transform: scale(1.1);">
-                    <span class="role-badge" style="background: var(--primary-yellow); color: black;">TRÉSORIER</span>
-                    <div class="member-name">Lucas Gournier</div>
-                    <div style="font-size: 0.8rem; color: #888;">Finances</div>
-                </div>
+    <div class="org-chart reveal">
+        <!-- Niveau 1 : Direction -->
+        <div class="org-level">
+            <div class="member-card card-pres" style="transform: scale(1.05);">
+                <span class="role-badge">PRÉSIDENT</span>
+                <div class="member-name">Asma Kajeiou</div>
+                <div class="member-sub">Stratégie & Vision</div>
             </div>
-
-            <div class="org-level">
-                <div class="member-card">
-                    <span class="role-badge">SECRÉTAIRE</span>
-                    <div class="member-name">Dhaker Meddeb</div>
-                    <div style="font-size: 0.8rem; color: #888;">Opérations</div>
-                </div>
-                <div class="member-card">
-                    <span class="role-badge">SECRÉTAIRE</span>
-                    <div class="member-name">Sanem S</div>
-                    <div style="font-size: 0.8rem; color: #888;">Opérations</div>
-                </div>
-            </div>
-
-            <div class="org-level">
-                <div class="member-card" style="border-left: 3px solid var(--secondary-blue);">
-                    <span class="role-badge" style="background: var(--secondary-blue); color: black;">PÔLE RESSOURCES HUMAINES</span>
-                    <div class="member-name">Myriam Bensaid</div>
-                    <div class="member-name">Amira Habes</div>
-                    <div style="font-size: 0.8rem; color: #888; margin-top: 5px;">Recrutement & Suivi</div>
-                </div>
-                <div class="member-card" style="border-left: 3px solid var(--secondary-blue);">
-                    <span class="role-badge" style="background: var(--secondary-blue); color: black;">PÔLE COMMUNICATION & DESIGN</span>
-                    <div class="member-name">Samia Barhili</div>
-                    <div class="member-name">Imran El Azri</div>
-                    <div class="member-name">Malak Abdou</div>
-                    <div class="member-name">Kaxter Daoudi</div>
-                    <div class="member-name">Alaa Ouazbir</div>
-                    <div style="font-size: 0.8rem; color: #888; margin-top: 5px;">Réseaux & Image</div>
-                </div>
-                <div class="member-card" style="border-left: 3px solid var(--secondary-blue);">
-                    <span class="role-badge" style="background: var(--secondary-blue); color: black;">PÔLE ÉVÉNEMENTIEL</span>
-                    <div class="member-name">Yasmina Hida</div>
-                    <div class="member-name">Bouchra Zamoum</div>
-                    <div class="member-name">Hajar Achour</div>
-                    <div style="font-size: 0.8rem; color: #888; margin-top: 5px;">Hackathons & Meetups</div>
-                </div>
-                <div class="member-card" style="border-left: 3px solid var(--secondary-blue);">
-                    <span class="role-badge" style="background: var(--secondary-blue); color: black;">PÔLE RELATIONS ENTREPRISE</span>
-                    <div class="member-name">Tiziri Bouchichene</div>
-                    <div class="member-name">Yaasmine Mardak</div>
-                    <div style="font-size: 0.8rem; color: #888; margin-top: 5px;">Partenariats</div>
-                </div>
+            <div class="member-card card-pres" style="transform: scale(1.05);">
+                <span class="role-badge">TRÉSORIER</span>
+                <div class="member-name">Lucas Gournier</div>
+                <div class="member-sub">Finances</div>
             </div>
         </div>
-    </section>
 
-    <!-- CONTACT SECTION -->
-    <section id="contact">
+        <!-- Niveau 2 : Secrétariat -->
+        <div class="org-level">
+            <div class="member-card">
+                <span class="role-badge">SECRÉTAIRE</span>
+                <div class="member-name">Dhaker Meddeb</div>
+                <div class="member-sub">Opérations</div>
+            </div>
+            <div class="member-card">
+                <span class="role-badge">SECRÉTAIRE</span>
+                <div class="member-name">Sanem S</div>
+                <div class="member-sub">Opérations</div>
+            </div>
+        </div>
+
+        <!-- Niveau 3 : Pôles -->
+        <div class="org-level">
+            <div class="member-card card-pole">
+                <span class="role-badge">RESSOURCES HUMAINES</span>
+                <div class="member-name">Myriam Bensaid</div>
+                <div class="member-name">Amira Habes</div>
+                <div class="member-sub" style="margin-top: 10px;">Recrutement & Suivi</div>
+            </div>
+            <div class="member-card card-pole">
+                <span class="role-badge">COM & DESIGN</span>
+                <div class="member-name">Samia Barhili</div>
+                <div class="member-name">Imran El Azri</div>
+                <div class="member-name">Malak Abdou</div>
+                <div class="member-name">Kaxter Daoudi</div>
+                <div class="member-name">Alaa Ouazbir</div>
+                <div class="member-sub" style="margin-top: 10px;">Réseaux & Image</div>
+            </div>
+            <div class="member-card card-pole">
+                <span class="role-badge">ÉVÉNEMENTIEL</span>
+                <div class="member-name">Yasmina Hida</div>
+                <div class="member-name">Bouchra Zamoum</div>
+                <div class="member-name">Hajar Achour</div>
+                <div class="member-sub" style="margin-top: 10px;">Hackathons & Meetups</div>
+            </div>
+            <div class="member-card card-pole">
+                <span class="role-badge">RELATIONS ENT.</span>
+                <div class="member-name">Tiziri Bouchichene</div>
+                <div class="member-name">Yaasmine Mardak</div>
+                <div class="member-sub" style="margin-top: 10px;">Partenariats</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section id="contact">
+    <div class="section-header reveal">
+        <span class="section-subtitle">Nous rejoindre</span>
         <h2 class="section-title">Nous <span>Contacter</span></h2>
-        <div class="contact-container">
-            <div class="contact-info">
-                <div class="info-item">
-                    <i class="fas fa-envelope"></i>
+    </div>
+
+    <div class="contact-container reveal">
+        <div class="contact-info">
+            <h3>Construisons le futur<br><span style="color: var(--primary-yellow);">ensemble.</span></h3>
+
+            <div class="info-item">
+                <div class="icon-box"><i class="fas fa-envelope"></i></div>
+                <div>
+                    <span style="display:block; font-size:0.8rem; color:#666; text-transform:uppercase;">Email</span>
                     <span>atallcostai@gmail.com</span>
                 </div>
-                <div class="info-item">
-                    <i class="fas fa-location-dot"></i>
-                    <span>Paris - France</span>
-                </div>
-                <div class="social-links">
-                    <a href="https://www.instagram.com/atallcost.ai" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.linkedin.com/company/atallcost/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="https://discord.com/invite/eu2X2DqUyR" target="_blank"><i class="fab fa-discord"></i></a>
+            </div>
+            <div class="info-item">
+                <div class="icon-box"><i class="fas fa-map-marker-alt"></i></div>
+                <div>
+                    <span style="display:block; font-size:0.8rem; color:#666; text-transform:uppercase;">Localisation</span>
+                    <span>Paris, France</span>
                 </div>
             </div>
-            <form id="contact-form">
-                <div style="display: flex; flex-direction: column; gap: 20px;">
-                    <input type="text" name="user_name" placeholder="Nom complet" required>
-                    <input type="email" name="user_email" placeholder="Email" required>
-                    <textarea name="message" rows="4" placeholder="Votre motivation..." required></textarea>
-                    <button type="submit" id="submit-btn" class="submit-btn">Envoyer</button>
-                </div>
-            </form>
+
+            <div class="social-links">
+                <a href="https://www.instagram.com/atallcost.ai" target="_blank" class="social-btn"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/company/atallcost/" target="_blank" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://discord.com/invite/eu2X2DqUyR" target="_blank" class="social-btn"><i class="fab fa-discord"></i></a>
+            </div>
         </div>
-    </section>
 
-    <footer>
-        <p>&copy; 2026 At All Cost AI Lab. Association Étudiante.</p>
-    </footer>
+        <form id="contact-form">
+            <div class="form-group">
+                <input type="text" name="user_name" placeholder="Nom complet" required>
+            </div>
+            <div class="form-group">
+                <input type="email" name="user_email" placeholder="Adresse Email" required>
+            </div>
+            <div class="form-group">
+                <select name="pole" style="color: var(--text-gray);">
+                    <option value="" disabled selected>Pôle souhaité</option>
+                    <option value="membre">Membre Actif</option>
+                    <option value="tech">Technique</option>
+                    <option value="com">Communication</option>
+                    <option value="event">Événementiel</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <textarea name="message" rows="5" placeholder="Parlez-nous de vos motivations..." required></textarea>
+            </div>
+            <button type="submit" id="submit-btn" class="submit-btn">Envoyer ma candidature</button>
+        </form>
+    </div>
+</section>
 
-    <script>
-        // --- CONFIGURATION EMAILJS ---
-        // Remplace les valeurs ci-dessous par les tiennes depuis ton compte EmailJS
-        const EMAILJS_PUBLIC_KEY = "RSnQP5_BBUJX2wfBM"; // ex: "user_xxxxxxxxxx"
-        const EMAILJS_SERVICE_ID = "service_liem09u"; // ex: "service_gmail"
-        const EMAILJS_TEMPLATE_ID = "template_n05x1y8"; // ex: "template_contact"
+<footer>
+    <div>
+        <img src="logo/vrai_logo_aac.png" alt="AAC" style="height: 30px; opacity: 0.5; vertical-align: middle; margin-right: 10px;">
+        <span style="font-family:'Android101'; font-size: 1.2rem; color: #444;">AAC</span>
+    </div>
+    <p>&copy; 2024 At All Cost AI Lab. Association Étudiante.</p>
+</footer>
 
-        // Initialisation d'EmailJS au chargement
-        (function() {
-            emailjs.init(EMAILJS_PUBLIC_KEY);
-        })();
+<script>
+    // CONFIG EMAILJS
+    const EMAILJS_PUBLIC_KEY = "RSnQP5_BBUJX2wfBM";
+    const EMAILJS_SERVICE_ID = "service_liem09u";
+    const EMAILJS_TEMPLATE_ID = "template_n05x1y8";
 
-        // --- GESTION DU FORMULAIRE ---
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const btn = document.getElementById('submit-btn');
-            const originalText = btn.innerText;
-            btn.innerText = "Envoi...";
-            btn.disabled = true;
+    (function() {
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+    })();
 
-            emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, this)
-                .then(() => {
-                    btn.innerText = "Candidature Envoyée !";
-                    btn.style.background = "#4CAF50";
-                    this.reset();
-                    setTimeout(() => {
-                        btn.innerText = originalText;
-                        btn.style.background = "";
-                        btn.disabled = false;
-                    }, 4000);
-                })
-                .catch((err) => {
-                    console.error(err);
-                    console.log("Passage au mode secours (mailto)");
-                    btn.innerText = "Redirection vers votre boîte mail...";
-                    btn.style.backgroundColor = "#E65100"; // Orange pour prévenir
+    // ANIMATION AU SCROLL
+    function reveal() {
+        var reveals = document.querySelectorAll(".reveal");
+        for (var i = 0; i < reveals.length; i++) {
+            var windowHeight = window.innerHeight;
+            var elementTop = reveals[i].getBoundingClientRect().top;
+            var elementVisible = 150;
+            if (elementTop < windowHeight - elementVisible) {
+                reveals[i].classList.add("active");
+            }
+        }
+    }
+    window.addEventListener("scroll", reveal);
+    // Trigger une fois au chargement
+    reveal();
 
-                    // Récupération des données pour le fallback
-                    const nom = this.elements["user_name"].value;
-                    const email = this.elements["user_email"].value;
-                    const message = this.elements["message"].value;
-                    setTimeout(() => {
-                        const subject = `Candidature At All Cost - ${nom}`;
-                        const body = `Nom: ${nom}%0D%0AEmail: ${email}%0D%0AMessage:%0D%0A${message}`;
+    // GESTION FORMULAIRE
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('submit-btn');
+        const originalText = btn.innerText;
+        btn.innerText = "Traitement en cours...";
+        btn.style.opacity = "0.7";
+        btn.disabled = true;
 
-                        // Ouvre le client mail par défaut avec la bonne adresse
-                        window.location.href = `mailto:atallcostai@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+        emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, this)
+            .then(() => {
+                btn.innerText = "Envoyé avec succès !";
+                btn.style.background = "#4CAF50";
+                btn.style.color = "white";
+                this.reset();
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.background = "";
+                    btn.style.color = "";
+                    btn.style.opacity = "1";
+                    btn.disabled = false;
+                }, 4000);
+            })
+            .catch((err) => {
+                console.error(err);
+                btn.innerText = "Erreur - Redirection...";
+                btn.style.background = "#E65100";
 
-                        // Reset UI
-                        setTimeout(() => {
-                            btn.innerText = originalText;
-                            btn.style.backgroundColor = "";
-                            btn.disabled = false;
-                            this.reset();
-                        }, 2000);
-                    }, 1500);
-                });
-        });
-    </script>
+                // Fallback
+                const nom = this.querySelector('[name="user_name"]').value;
+                const msg = this.querySelector('[name="message"]').value;
+                setTimeout(() => {
+                    window.location.href = `mailto:atallcostai@gmail.com?subject=Candidature AAC - ${nom}&body=${msg}`;
+                    btn.innerText = originalText;
+                    btn.style.background = "";
+                    btn.disabled = false;
+                }, 1500);
+            });
+    });
+</script>
 </body>
 </html>
