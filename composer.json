@@ -1,0 +1,14 @@
+{
+  "name": "atallcost/site",
+  "description": "Application PHP At All Cost deployable sur Vercel",
+  "type": "project",
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  },
+  "scripts": {
+    "serve": "php -S localhost:8000 api/index.php"
+  }
+}
